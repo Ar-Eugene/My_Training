@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.firebase)
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.runtime.livedata)
 
@@ -81,4 +83,8 @@ dependencies {
     // Accompanist для управления навигацией с BottomSheet
     implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.systemuicontroller)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
 }

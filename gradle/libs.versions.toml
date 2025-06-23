@@ -23,6 +23,8 @@ glide = "4.16.0"
 glideCompose = "1.0.0-beta01"
 retrofit = "2.11.0"
 runtimeLivedata = "1.8.3"
+fire = "4.4.2"
+firebaseBomVersion= "33.15.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -67,6 +69,10 @@ retrofit-converter-scalars = { module = "com.squareup.retrofit2:converter-scalar
 
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
+# Firebase
+firebase-bom = { group = "com.google.firebase", name= "firebase-bom", version.ref = "firebaseBomVersion" }
+firebase-firestore = { group = "com.google.firebase", name= "firebase-firestore-ktx"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -75,4 +81,6 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize" }
+firebase = { id = "com.google.gms.google-services", version.ref = "fire" }
+
 
