@@ -66,4 +66,7 @@ dependencies {
     // Accompanist для управления навигацией с BottomSheet
     implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.systemuicontroller)
+
+    //Datastore
+    implementation(libs.androidx.datastore.preferences)
 }
