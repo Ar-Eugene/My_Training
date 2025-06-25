@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.core"
+    namespace = "com.example.feature_ege"
     compileSdk = 35
 
     defaultConfig {
@@ -65,10 +65,6 @@ dependencies {
     ksp(libs.com.hilt.ksp)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Accompanist для управления навигацией с BottomSheet
-    implementation(libs.accompanist.navigation.material)
-    implementation(libs.accompanist.systemuicontroller)
 
-    //Datastore
-    implementation(libs.androidx.datastore.preferences)
+
 }
