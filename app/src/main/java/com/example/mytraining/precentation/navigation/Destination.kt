@@ -1,8 +1,9 @@
-package com.example.core.precentation.navigation
+package com.example.mytraining.precentation.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.example.core.R
+import com.example.mytraining.R
+
 
 /**
  * Навигация для NavigationBar

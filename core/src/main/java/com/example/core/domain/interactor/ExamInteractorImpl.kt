@@ -2,13 +2,15 @@ package com.example.core.domain.interactor
 
 import com.example.core.domain.ExamType
 import com.example.core.domain.repository.ExamPreferencesRepository
+import javax.inject.Inject
 
-class ExamInteractorImpl(private val preferencesRepository: ExamPreferencesRepository) {
-     suspend fun saveExamType(examType: ExamType) {
-        return preferencesRepository.saveExamType(examType)
+class ExamInteractorImpl @Inject constructor(private val examPreferencesRepository: ExamPreferencesRepository) :
+    ExamInteractor {
+    override suspend fun saveExamType(examType: ExamType) {
+        return examPreferencesRepository.saveExamType(examType)
     }
 
-     suspend fun getExamType(): ExamType {
-        return preferencesRepository.getExamType()
+    override suspend fun getExamType(): ExamType {
+        return examPreferencesRepository.getExamType()
     }
 }

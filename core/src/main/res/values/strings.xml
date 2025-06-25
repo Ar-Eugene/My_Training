@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="home_label">Главная</string>
-    <string name="favorite_label">Избранные</string>
-    <string name="profile_label">Профиль</string>
-</resources>
