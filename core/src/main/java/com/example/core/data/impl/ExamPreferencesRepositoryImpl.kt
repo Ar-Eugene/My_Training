@@ -6,13 +6,14 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.core.domain.ExamType
 import com.example.core.domain.repository.ExamPreferencesRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 private val Context.dataStore by preferencesDataStore(name = "settings")
 
-class ExamPreferencesRepositoryImpl @Inject constructor(private val context: Context) :
+class ExamPreferencesRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context) :
     ExamPreferencesRepository {
 
     override suspend fun saveExamType(examType: ExamType) {

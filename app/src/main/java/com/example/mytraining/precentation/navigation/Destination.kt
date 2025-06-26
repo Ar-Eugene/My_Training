@@ -14,10 +14,11 @@ enum class Destination(
     @StringRes
     val label: Int,
     @DrawableRes
-    icone: Int
+    val icon: Int,
+    val contentDescription: String
 ) {
-    HOME("home_screen", R.string.home_label, R.drawable.home_label),
-    Favorites("favorite_screen", R.string.favorite_label, R.drawable.favorite_label),
-    Profile("profile_screen", R.string.profile_label, R.drawable.person_label)
+    HOME("home_screen", R.string.home_label, R.drawable.home_label,"home_screen"),
+    Favorites("favorite_screen", R.string.favorite_label, R.drawable.favorite_label,"favorite_screen"),
+    Profile("profile_screen", R.string.profile_label, R.drawable.person_label,"profile_screen")
 }
 
