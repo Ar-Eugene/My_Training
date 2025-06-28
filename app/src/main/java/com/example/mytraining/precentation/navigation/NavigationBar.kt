@@ -9,15 +9,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_favorites.presentation.ui.FavoriteScreen
 import com.example.feature_profile.presentation.ui.ProfileScreen
@@ -49,7 +47,13 @@ fun AppNavHost(
 fun NavigationBarExample(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val startDestination = Destination.HOME
-    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
+    // Отслеживаем текущий маршрут
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    // Определяем выбранный индекс на основе текущего маршрута
+    val selectedDestination = Destination.entries.indexOfFirst { it.route == currentRoute }
+        .takeIf { it != -1 } ?: startDestination.ordinal
 
     Scaffold(
         modifier = modifier,
@@ -59,8 +63,14 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
                     NavigationBarItem(
                         selected = selectedDestination == index,
                         onClick = {
-                            navController.navigate(route = destination.route)
-                            selectedDestination = index
+                            // очищаем стек
+                            navController.navigate(route = destination.route) {
+                                popUpTo(startDestination.route) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         icon = {
                             Icon(
