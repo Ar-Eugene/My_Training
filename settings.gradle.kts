@@ -22,3 +22,7 @@ dependencyResolutionManagement {
 rootProject.name = "MyTraining"
 include(":app")
 include(":core")
+include(":feature-profile")
+include(":feature-favorites")
+include(":feature-oge")
+include(":feature-ege")

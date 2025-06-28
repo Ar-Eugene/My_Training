@@ -12,6 +12,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/feature-ege" />
+            <option value="$PROJECT_DIR$/feature-favorites" />
+            <option value="$PROJECT_DIR$/feature-oge" />
+            <option value="$PROJECT_DIR$/feature-profile" />
           </set>
         </option>
       </GradleProjectSettings>

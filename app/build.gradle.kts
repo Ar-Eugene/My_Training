@@ -47,6 +47,10 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":feature-profile"))
+    implementation(project(":feature-favorites"))
+    implementation(project(":feature-oge"))
+    implementation(project(":feature-ege"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

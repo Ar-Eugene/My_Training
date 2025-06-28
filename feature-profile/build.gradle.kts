@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.core"
+    namespace = "com.example.feature_profile"
     compileSdk = 35
 
     defaultConfig {
@@ -57,18 +57,8 @@ dependencies {
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.runtime.livedata)
 
-    // Navigation for Compose
-    implementation(libs.androidx.navigation.compose)
-
     // Hilt
     implementation(libs.com.hilt)
     ksp(libs.com.hilt.ksp)
     implementation(libs.androidx.hilt.navigation.compose)
-
-    // Accompanist для управления навигацией с BottomSheet
-    implementation(libs.accompanist.navigation.material)
-    implementation(libs.accompanist.systemuicontroller)
-
-    //Datastore
-    implementation(libs.androidx.datastore.preferences)
 }
