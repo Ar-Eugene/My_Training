@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="user">User</string>
+    <string name="user">User</string>
+    <string name="write_support">Написать в поддержку</string>
+    <string name="share_progect">Поделиться приложением</string>
+    <string name="sign_up_for_premium">Оформить премиум</string>
 </resources>

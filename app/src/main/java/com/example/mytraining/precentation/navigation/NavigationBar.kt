@@ -2,6 +2,7 @@ package com.example.mytraining.precentation.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
@@ -78,7 +79,11 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
                                 contentDescription = destination.contentDescription
                             )
                         },
-                        label = { Text(stringResource(id = destination.label)) }
+                        label = {
+                            Text(
+                                stringResource(id = destination.label),
+                                style = MaterialTheme.typography.bodyLarge
+                            ) }
                     )
                 }
             }
