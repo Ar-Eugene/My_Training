@@ -1,8 +1,11 @@
 package com.example.mytraining.precentation.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
@@ -19,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_favorites.presentation.ui.FavoriteScreen
+import com.example.feature_profile.presentation.ui.PremiumScreen
 import com.example.feature_profile.presentation.ui.ProfileScreen
 import com.example.mytraining.precentation.ui.HomeScreen
 
@@ -35,12 +39,17 @@ fun AppNavHost(
         Destination.entries.forEach { destination ->
             composable(destination.route) {
                 when (destination) {
-                    Destination.Profile -> ProfileScreen()
+                    Destination.Profile -> ProfileScreen() {
+                        navController.navigate(it)
+                    }
+
                     Destination.Favorites -> FavoriteScreen()
                     Destination.HOME -> HomeScreen()
                 }
             }
         }
+        composable("premium-screen") { PremiumScreen() }
+
     }
 }
 
@@ -56,35 +65,45 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
     val selectedDestination = Destination.entries.indexOfFirst { it.route == currentRoute }
         .takeIf { it != -1 } ?: startDestination.ordinal
 
+    var showBottomBar = Destination.entries.any { it.route == currentRoute }
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
-                Destination.entries.forEachIndexed { index, destination ->
-                    NavigationBarItem(
-                        selected = selectedDestination == index,
-                        onClick = {
-                            // очищаем стек
-                            navController.navigate(route = destination.route) {
-                                popUpTo(startDestination.route) {
-                                    saveState = true
+            // нижняя чясть кода отвечает за анимацию появления и исчезновения нижней панели
+            AnimatedVisibility(
+                visible = showBottomBar,
+                enter = slideInVertically(
+                    animationSpec = tween(500),
+                    initialOffsetY = { fullHeight -> fullHeight },
+                ),
+                exit = slideOutVertically(
+                    animationSpec = tween(500),
+                    targetOffsetY = { fullHeight -> fullHeight },
+                )
+            ) {
+                NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
+                    Destination.entries.forEachIndexed { index, destination ->
+                        NavigationBarItem(
+                            selected = selectedDestination == index,
+                            onClick = {
+                                // очищаем стек
+                                navController.navigate(route = destination.route) {
+                                    popUpTo(startDestination.route) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        icon = {
-                            Icon(
-                                painter = painterResource(id = destination.icon),
-                                contentDescription = destination.contentDescription
-                            )
-                        },
-                        label = {
-                            Text(
-                                stringResource(id = destination.label),
-                                style = MaterialTheme.typography.bodyLarge
-                            ) }
-                    )
+                            },
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = destination.icon),
+                                    contentDescription = destination.contentDescription
+                                )
+                            },
+                            label = { Text(stringResource(id = destination.label)) }
+                        )
+                    }
                 }
             }
         }

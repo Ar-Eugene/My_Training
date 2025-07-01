@@ -32,7 +32,7 @@ import com.example.feature_profile.R
  * Корневой метод экрана
  */
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
     val context = LocalContext.current
 
     Column(
@@ -101,11 +101,7 @@ fun ProfileScreen() {
             StartIconAction = painterResource(R.drawable.premium_ic),
             descriptionAction = stringResource(R.string.sign_up_for_premium),
             onClick = {
-                Toast.makeText(
-                    context,
-                    "Экран в разработке",
-                    Toast.LENGTH_SHORT
-                ).show()
+                onNavigate("premium-screen")
             }
         )
     }
