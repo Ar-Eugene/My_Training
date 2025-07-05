@@ -22,7 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_favorites.presentation.ui.FavoriteScreen
-import com.example.feature_profile.presentation.ui.PremiumScreen
+import com.example.feature_profile.presentation.ui.TarifScreen
 import com.example.feature_profile.presentation.ui.ProfileScreen
 import com.example.mytraining.precentation.ui.HomeScreen
 
@@ -48,7 +48,7 @@ fun AppNavHost(
                 }
             }
         }
-        composable("premium-screen") { PremiumScreen() }
+        composable("tarif-screen") { TarifScreen { navController.popBackStack() } }
 
     }
 }

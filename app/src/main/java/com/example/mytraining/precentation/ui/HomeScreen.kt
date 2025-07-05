@@ -22,7 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.domain.ExamType
 import com.example.feature_ege.presentation.ui.EgeScreen
@@ -41,7 +41,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(dimensionResource(com.example.core.R.dimen.padding_16dp)),
             horizontalArrangement = Arrangement.Start
         ) {
             SelectExamButton(
@@ -52,7 +52,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                     examTypeState.value = ExamType.OGE
                 }
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(dimensionResource(com.example.core.R.dimen.padding_8dp)))
             SelectExamButton(
                 text = "ЕГЭ",
                 selected = examTypeState.value == ExamType.EGE,
@@ -87,7 +87,7 @@ fun SelectExamButton(
             containerColor = if (selected) MaterialTheme.colorScheme.primary else Color.LightGray,
             contentColor = if (selected) Color.White else Color.Black
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(dimensionResource(com.example.core.R.dimen.padding_8dp))
     ) {
         Text(text)
     }

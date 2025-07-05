@@ -4,4 +4,18 @@
     <string name="write_support">Написать в поддержку</string>
     <string name="share_progect">Поделиться приложением</string>
     <string name="sign_up_for_premium">Оформить премиум</string>
+    <string name="top_app_bar_premium_screen">Тарифы</string>
+
+    <string name="basic_tarif">Базовый</string>
+    <string name="price_basic_tarif">300,00 рублей</string>
+    <string name="description_basic_tarif">- Доступ к одному из предметов ОГЭ или ЕГЭ</string>
+
+    <string name="extended_tarif">Расширенный</string>
+    <string name="price_extended_tarif">500,00 рублей</string>
+    <string name="description_extended_tarif">- Доступ к двум предметам ОГЭ или ЕГЭ</string>
+
+    <string name="premium_tarif">Премиум</string>
+    <string name="price_premium_tarif">1000,00 рублей</string>
+    <string name="description_premium_tarif">- Доступ ко всем предметам ОГЭ или ЕГЭ</string>
+
 </resources>

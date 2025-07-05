@@ -41,24 +41,24 @@ fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
             .statusBarsPadding()
             .navigationBarsPadding()
             .padding(
-                start = dimensionResource(R.dimen.padding_16dp),
-                end = dimensionResource(R.dimen.padding_16dp),
-                top = dimensionResource(R.dimen.padding_24dp)
+                start = dimensionResource(com.example.core.R.dimen.padding_16dp),
+                end = dimensionResource(com.example.core.R.dimen.padding_16dp),
+                top = dimensionResource(com.example.core.R.dimen.padding_24dp)
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             contentDescription = null,
             modifier = Modifier
-                .size(dimensionResource(R.dimen.image_size))
-                .padding(dimensionResource(R.dimen.padding_8dp)),
+                .size(dimensionResource(com.example.core.R.dimen.image_size))
+                .padding(dimensionResource(com.example.core.R.dimen.padding_8dp)),
             painter = painterResource(R.drawable.study_test)
         )
         Text(
             modifier = Modifier
-                .padding(bottom = dimensionResource(R.dimen.padding_24dp)),
+                .padding(bottom = dimensionResource(com.example.core.R.dimen.padding_24dp)),
             textAlign = TextAlign.Center,
-            text = "User",
+            text = "Пользователь",
             style = MaterialTheme.typography.displayLarge,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
@@ -101,7 +101,7 @@ fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
             StartIconAction = painterResource(R.drawable.premium_ic),
             descriptionAction = stringResource(R.string.sign_up_for_premium),
             onClick = {
-                onNavigate("premium-screen")
+                onNavigate("tarif-screen")
             }
         )
     }
@@ -121,39 +121,39 @@ fun CardАctionSelection(
     ElevatedCard(
         onClick = onClick,
         modifier = Modifier
-            .padding(bottom = dimensionResource(R.dimen.padding_16dp)),
-        elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(R.dimen.padding_8dp)),
+            .padding(bottom = dimensionResource(com.example.core.R.dimen.padding_16dp)),
+        elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(com.example.core.R.dimen.padding_8dp)),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = dimensionResource(R.dimen.padding_16dp),
-                    top = dimensionResource(R.dimen.padding_18dp),
-                    bottom = dimensionResource(R.dimen.padding_18dp)
+                    start = dimensionResource(com.example.core.R.dimen.padding_16dp),
+                    top = dimensionResource(com.example.core.R.dimen.padding_18dp),
+                    bottom = dimensionResource(com.example.core.R.dimen.padding_18dp)
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 modifier = Modifier
-                    .size(dimensionResource(R.dimen.padding_28dp)),
+                    .size(dimensionResource(com.example.core.R.dimen.padding_28dp)),
                 painter = StartIconAction,
                 contentDescription = null
             )
             Text(
                 modifier = Modifier
-                    .padding(start = dimensionResource(R.dimen.padding_8dp))
+                    .padding(start = dimensionResource(com.example.core.R.dimen.padding_8dp))
                     .weight(1f),
                 textAlign = TextAlign.Start,
                 text = descriptionAction,
-                style = MaterialTheme.typography.displayMedium,
+                style = MaterialTheme.typography.labelSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Icon(
                 modifier = Modifier
-                    .padding(end = dimensionResource(R.dimen.padding_8dp))
-                    .size(dimensionResource(R.dimen.padding_18dp)),
+                    .padding(end = dimensionResource(com.example.core.R.dimen.padding_8dp))
+                    .size(dimensionResource(com.example.core.R.dimen.padding_18dp)),
                 painter = painterResource(com.example.core.R.drawable.arrow_forward_small_ic),
                 contentDescription = null
             )
