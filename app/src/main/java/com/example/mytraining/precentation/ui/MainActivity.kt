@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.mytraining.precentation.navigation.NavigationBarExample
-import com.example.mytraining.precentation.ui.theme.MyTrainingTheme
+import com.example.core.ui.theme.MyTrainingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.mytraining.precentation.ui.theme
+package com.example.core.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -52,6 +52,7 @@ fun MyTrainingTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = Shapes,
         content = content
     )
 }
