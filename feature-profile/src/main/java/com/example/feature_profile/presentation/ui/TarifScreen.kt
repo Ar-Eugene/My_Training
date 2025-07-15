@@ -37,54 +37,66 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.core.ui.theme.BackgroundGradientGreen
+import com.example.core.ui.theme.BackgroundGradientBlue
 import com.example.feature_profile.R
 
 
 @Composable
 fun TarifScreen(onNavigate: () -> Unit = {}) {
-    Scaffold(
+    val backgroundGradientColor = listOf(
+        BackgroundGradientGreen, BackgroundGradientBlue
+    )
+    Box(
         modifier = Modifier
-            .statusBarsPadding()
-            .padding(horizontal = dimensionResource(com.example.core.R.dimen.padding_16dp)),
-        topBar = {
-            TopAppBarState(onClick = onNavigate)
-        }
-
-    ) { paddingValues ->
-        Column(
+            .fillMaxSize()
+            .background(brush = Brush.linearGradient(colors = backgroundGradientColor))
+    ) {
+        Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-        ) {
+                .statusBarsPadding()
+                .padding(horizontal = dimensionResource(com.example.core.R.dimen.padding_16dp)),
+            topBar = {
+                TopAppBarState(onClick = onNavigate)
+            },
+            containerColor = Color.Transparent // убираем фон Scaffold, иначе перекроет градиент
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_24dp)))
 
-            Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_24dp)))
+                ChoiceTarife(
+                    iconRes = R.drawable.study_test,
+                    titleRes = R.string.basic_tarif,
+                    priceRes = R.string.price_basic_tarif,
+                    descriptionRes = R.string.description_basic_tarif
+                )
 
-            // Базовый тариф
-            ChoiceTarife(
-                iconRes = R.drawable.study_test,
-                titleRes = R.string.basic_tarif,
-                priceRes = R.string.price_basic_tarif,
-                descriptionRes = R.string.description_basic_tarif
-            )
-            // Расширенный тариф
-            ChoiceTarife(
-                iconRes = R.drawable.study_test,
-                titleRes = R.string.extended_tarif,
-                priceRes = R.string.price_extended_tarif,
-                descriptionRes = R.string.description_extended_tarif
-            )
-            // Премиум тариф
-            ChoiceTarife(
-                iconRes = R.drawable.study_test,
-                titleRes = R.string.premium_tarif,
-                priceRes = R.string.price_premium_tarif,
-                descriptionRes = R.string.description_premium_tarif
-            )
+                ChoiceTarife(
+                    iconRes = R.drawable.study_test,
+                    titleRes = R.string.extended_tarif,
+                    priceRes = R.string.price_extended_tarif,
+                    descriptionRes = R.string.description_extended_tarif
+                )
+
+                ChoiceTarife(
+                    iconRes = R.drawable.study_test,
+                    titleRes = R.string.premium_tarif,
+                    priceRes = R.string.price_premium_tarif,
+                    descriptionRes = R.string.description_premium_tarif
+                )
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ runtimeLivedata = "1.8.3"
 fire = "4.4.2"
 firebaseBomVersion= "33.15.0"
 datastorePreferences = "1.0.0"
+lottieCompose = "6.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -76,6 +77,9 @@ firebase-firestore = { group = "com.google.firebase", name= "firebase-firestore-
 
 #Datastore
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
+
+# Lottie
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

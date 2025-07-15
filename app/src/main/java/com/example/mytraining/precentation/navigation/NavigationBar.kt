@@ -9,11 +9,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -21,9 +23,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.core.ui.theme.BottomNavigationColor
 import com.example.feature_favorites.presentation.ui.FavoriteScreen
-import com.example.feature_profile.presentation.ui.TarifScreen
 import com.example.feature_profile.presentation.ui.ProfileScreen
+import com.example.feature_profile.presentation.ui.TarifScreen
 import com.example.mytraining.precentation.ui.HomeScreen
 
 @Composable
@@ -81,12 +84,14 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
                     targetOffsetY = { fullHeight -> fullHeight },
                 )
             ) {
-                NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
+                NavigationBar(
+                    containerColor = BottomNavigationColor,
+                    windowInsets = NavigationBarDefaults.windowInsets
+                ) {
                     Destination.entries.forEachIndexed { index, destination ->
                         NavigationBarItem(
                             selected = selectedDestination == index,
                             onClick = {
-                                // очищаем стек
                                 navController.navigate(route = destination.route) {
                                     popUpTo(startDestination.route) {
                                         saveState = true
@@ -98,10 +103,23 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
                             icon = {
                                 Icon(
                                     painter = painterResource(id = destination.icon),
-                                    contentDescription = destination.contentDescription
+                                    contentDescription = destination.contentDescription,
+                                    tint = if (selectedDestination == index) Color(0xFF324379) else Color(
+                                        0xFF2C2C2C
+                                    )
                                 )
                             },
-                            label = { Text(stringResource(id = destination.label)) }
+                            label = {
+                                Text(
+                                    text = stringResource(id = destination.label),
+                                    color = if (selectedDestination == index) Color(0xFF324379) else Color(
+                                        0xFF2C2C2C
+                                    ) // или другой контрастный цвет,
+                                )
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = Color(0xFFE0E5F2) // фон выделенного таба
+                            )
                         )
                     }
                 }
