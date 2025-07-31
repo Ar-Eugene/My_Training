@@ -1,6 +1,6 @@
 package com.example.core.domain.interactor
 
-import com.example.core.domain.ExamType
+import com.example.core.domain.models.ExamType
 import com.example.core.domain.repository.ExamPreferencesRepository
 import javax.inject.Inject
 
