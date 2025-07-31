@@ -10,7 +10,6 @@ import com.example.core.domain.models.Ticket
  * Пример mock данных для ОГЭ Русский 2025
  */
 
-
 val mockOgeTicketsRus2025 = listOf(
     Ticket(
         id = "oge_rus_2025_t1",
