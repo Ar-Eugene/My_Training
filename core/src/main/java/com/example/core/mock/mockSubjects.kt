@@ -57,6 +57,7 @@ val mockSubjects = listOf(
             )
         )
     ),
+    // ОГЭ Русский язык
     Subject(
         id = "oge_rus",
         name = "Русский язык",
