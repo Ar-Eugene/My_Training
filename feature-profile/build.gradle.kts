@@ -63,4 +63,6 @@ dependencies {
     implementation(libs.com.hilt)
     ksp(libs.com.hilt.ksp)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.lottie.compose)
 }

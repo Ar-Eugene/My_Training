@@ -3,9 +3,10 @@ package com.example.feature_profile.presentation.ui
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -26,6 +28,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.core.ui.theme.BackgroundGradientGreen
+import com.example.core.ui.theme.BackgroundGradientBlue
+import com.example.core.ui.theme.CardBackgroundGradientGreen
+import com.example.core.ui.theme.CardBackgroundGradientBrown
 import com.example.feature_profile.R
 
 /**
@@ -34,10 +45,16 @@ import com.example.feature_profile.R
 @Composable
 fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
     val context = LocalContext.current
+    val backgroundGradientColor = listOf(
+        BackgroundGradientGreen, BackgroundGradientBlue
+    )
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
+            .background(
+                brush = Brush.linearGradient(colors = backgroundGradientColor)
+            )
             .statusBarsPadding()
             .navigationBarsPadding()
             .padding(
@@ -47,12 +64,11 @@ fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            contentDescription = null,
+        LottieAnimation(
+            composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_profile_image)).value,
             modifier = Modifier
-                .size(dimensionResource(com.example.core.R.dimen.image_size))
-                .padding(dimensionResource(com.example.core.R.dimen.padding_8dp)),
-            painter = painterResource(R.drawable.study_test)
+                .size(180.dp),
+            iterations = LottieConstants.IterateForever // Бесконечное повторение
         )
         Text(
             modifier = Modifier
@@ -118,6 +134,9 @@ fun CardАctionSelection(
     StartIconAction: Painter,
     descriptionAction: String
 ) {
+    val backgroundGradientColor = listOf(
+        CardBackgroundGradientGreen, CardBackgroundGradientBrown,
+    )
     ElevatedCard(
         onClick = onClick,
         modifier = Modifier
@@ -127,6 +146,7 @@ fun CardАctionSelection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(brush = Brush.horizontalGradient(colors = backgroundGradientColor))
                 .padding(
                     start = dimensionResource(com.example.core.R.dimen.padding_16dp),
                     top = dimensionResource(com.example.core.R.dimen.padding_18dp),

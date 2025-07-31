@@ -15,7 +15,7 @@
     <string name="description_extended_tarif">- Доступ к двум предметам ОГЭ или ЕГЭ</string>
 
     <string name="premium_tarif">Премиум</string>
-    <string name="price_premium_tarif">1000,00 рублей</string>
+    <string name="price_premium_tarif">1 000,00 рублей</string>
     <string name="description_premium_tarif">- Доступ ко всем предметам ОГЭ или ЕГЭ</string>
 
 </resources>
