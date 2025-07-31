@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.core.domain.ExamType
+import com.example.core.domain.models.ExamType
 import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.BackgroundGradientBlue
 import com.example.feature_ege.presentation.ui.EgeScreen
