@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.firebase)
 }
 
 android {
@@ -80,16 +79,22 @@ dependencies {
     ksp(libs.com.hilt.ksp)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //Glide
-    implementation(libs.glide)
-    ksp(libs.glide.compiler)
-    implementation(libs.glide.compose)
+    //Coil
+    implementation(libs.coil.compose)
+    implementation(libs.play.services.location)
 
     // Accompanist для управления навигацией с BottomSheet
     implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.systemuicontroller)
 
-    //Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.firestore)
+
+    //Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.scalars)
+    implementation(libs.converter.gson)
+    implementation (libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+
+    //Datastore
+    implementation(libs.androidx.datastore.preferences)
 }
