@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -25,10 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.domain.models.ExamType
-import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.BackgroundGradientBlue
+import com.example.core.ui.theme.BackgroundGradientGreen
+import com.example.core.ui.theme.BottomNavigationColor
+import com.example.core.ui.theme.CardBackgroundGradientBrown
 import com.example.feature_ege.presentation.ui.EgeScreen
 import com.example.feature_oge.presentation.ui.OgeScreen
 import com.example.mytraining.precentation.viewmodel.HomeViewModel
@@ -47,15 +53,18 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
         modifier = Modifier
             .fillMaxSize()
             .background(brush = Brush.linearGradient(colors = backgroundGradientColor))
+            .statusBarsPadding()
     ) {
-        // --- Кнопки выбора типа экзамена ---
+        // Кнопки выбора типа экзамена
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(dimensionResource(com.example.core.R.dimen.padding_16dp)),
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.Center
         ) {
             SelectExamButton(
+                modifier = Modifier
+                    .weight(1f),
                 text = "ОГЭ",
                 selected = examTypeState.value == ExamType.OGE,
                 onClick = {
@@ -65,6 +74,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
             )
             Spacer(modifier = Modifier.width(dimensionResource(com.example.core.R.dimen.padding_8dp)))
             SelectExamButton(
+                modifier = Modifier
+                    .weight(1f),
                 text = "ЕГЭ",
                 selected = examTypeState.value == ExamType.EGE,
                 onClick = {
@@ -88,18 +99,30 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
 @Composable
 fun SelectExamButton(
+    modifier: Modifier = Modifier,
     text: String,
     selected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Button(
+        modifier = modifier
+            .height(80.dp),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (selected) MaterialTheme.colorScheme.primary else Color.LightGray,
+            containerColor = if (selected) CardBackgroundGradientBrown else BottomNavigationColor,
             contentColor = if (selected) Color.White else Color.Black
         ),
-        shape = RoundedCornerShape(dimensionResource(com.example.core.R.dimen.padding_8dp))
+        shape = RoundedCornerShape(dimensionResource(com.example.core.R.dimen.padding_8dp)),
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 8.dp,
+            pressedElevation = 4.dp,
+            disabledElevation = 0.dp
+        )
     ) {
-        Text(text)
+        Text(
+            text, style = MaterialTheme.typography.displayMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 }
