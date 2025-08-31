@@ -40,7 +40,10 @@ import com.example.feature_oge.presentation.ui.OgeScreen
 import com.example.mytraining.precentation.viewmodel.HomeViewModel
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    onNavigate: (String) -> Unit = {}
+) {
     val examTypeState = remember { mutableStateOf<ExamType?>(null) }
     val backgroundGradientColor = listOf(
         BackgroundGradientGreen, BackgroundGradientBlue
@@ -85,7 +88,11 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
             )
         }
         when (examTypeState.value) {
-            ExamType.OGE -> OgeScreen()
+            ExamType.OGE -> OgeScreen(
+                onSubjectClick = { subjectId ->
+                    homeViewModel.navigateToYearSelection(subjectId, onNavigate)
+                }
+            )
             ExamType.EGE -> EgeScreen()
             null -> {
                 // Показываем загрузку
