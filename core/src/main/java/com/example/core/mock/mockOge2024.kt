@@ -25,6 +25,52 @@ val mockOgeTicketsEng2024 = listOf(
                         answerType = AnswerType.SINGLE_CHOICE,
                         options = listOf("1", "2", "3", "4"),
                         correctAnswers = listOf("2")
+                    ),
+                    Question(
+                        id = "oge_eng_2024_t1_task1_q2",
+                        text = "Object on Eath?",
+                        answerType = AnswerType.SINGLE_CHOICE,
+                        options = listOf("1", "2", "3", "4"),
+                        correctAnswers = listOf("2")
+                    )
+                )
+            ),
+            Task(
+                id = "oge_eng_2024_t1_task2",
+                number = 2,
+                questions = listOf(
+                    Question(
+                        id = "oge_eng_2024_t1_task2_q1",
+                        text = "Where W ?",
+                        answerType = AnswerType.SINGLE_CHOICE,
+                        options = listOf("w", "t", "y", "a"),
+                        correctAnswers = listOf("w")
+                    )
+                )
+            )
+        )
+    ),
+    Ticket(
+        id = "oge_eng_2024_t2",
+        number = 2,
+        tasks = listOf(
+            Task(
+                id = "oge_eng_2024_t2_task1",
+                number = 1,
+                questions = listOf(
+                    Question(
+                        id = "oge_eng_2024_t2_task1_q1",
+                        text = "Where W ?",
+                        answerType = AnswerType.SINGLE_CHOICE,
+                        options = listOf("w", "t", "y", "a"),
+                        correctAnswers = listOf("w")
+                    ),
+                    Question(
+                        id = "oge_eng_2024_t2_task1_q2",
+                        text = "Where G ?",
+                        answerType = AnswerType.SINGLE_CHOICE,
+                        options = listOf("g", "w", "y", "a"),
+                        correctAnswers = listOf("g")
                     )
                 )
             )

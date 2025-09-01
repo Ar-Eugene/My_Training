@@ -36,7 +36,7 @@ import com.example.mytraining.precentation.ui.HomeScreen
 fun AppNavHost(
     navController: NavHostController,
     startDestination: Destination,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController,
@@ -59,8 +59,7 @@ fun AppNavHost(
             }
         }
         composable("tarif-screen") { TarifScreen { navController.popBackStack() } }
-        //composable("rus-language-oge-screen") { RusLanguageOgeScreen { navController.popBackStack() } }
-        
+
         // Новые маршруты для ОГЭ
         composable("year-selection/{subjectId}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
@@ -68,10 +67,11 @@ fun AppNavHost(
                 subjectId = subjectId,
                 onYearClick = { subjectId, year ->
                     navController.navigate("tickets/$subjectId/$year")
-                }
+                },
+                onNavigate = { navController.popBackStack() }
             )
         }
-        
+
         composable("tickets/{subjectId}/{year}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
@@ -83,11 +83,12 @@ fun AppNavHost(
                 }
             )
         }
-        
+
         composable("ticket-details/{subjectId}/{year}/{ticketNumber}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
-            val ticketNumber = backStackEntry.arguments?.getString("ticketNumber")?.toIntOrNull() ?: 0
+            val ticketNumber =
+                backStackEntry.arguments?.getString("ticketNumber")?.toIntOrNull() ?: 0
             TicketDetailsScreen(
                 subjectId = subjectId,
                 year = year,
