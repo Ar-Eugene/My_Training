@@ -57,7 +57,6 @@ fun YearSelectionScreen(
     ) {
         TopIconButtonAndText(onClick = onNavigate, title = "Выберите год: ${subject?.name ?: ""}")
 
-        // Список годов
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             verticalArrangement = Arrangement.spacedBy(12.dp),
