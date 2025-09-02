@@ -60,7 +60,7 @@ fun TicketsScreen(
                         modifier = Modifier.fillMaxWidth(),
                         text = "Билет ${ticket.number}",
                         onClick = {
-                            onTicketClick(subjectId, year, ticket.number)
+                            onTicketClick(subjectId, year, trainingSection, ticket.number)
                         }
                     )
                 }

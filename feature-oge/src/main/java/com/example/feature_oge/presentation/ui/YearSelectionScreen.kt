@@ -33,6 +33,7 @@ import com.example.core.mock.mockSubjects
 import com.example.core.ui.theme.BackgroundGradientBlue
 import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.CardBackgroundGradientBrown
+import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
 
 @Composable
 fun YearSelectionScreen(
@@ -77,42 +78,7 @@ fun YearSelectionScreen(
         }
     }
 }
-/**
- *
- * Метод отвечающий за кнопку назад и текст рядом
- */
-@Composable
-fun TopIconButtonAndText(
-    onClick: () -> Unit,
-    title: String,
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
-    ) {
-        // Кнопка назад
-        IconButton(
-            onClick = onClick,
-            modifier = Modifier.align(Alignment.TopStart) // строго в верхнем левом углу
-        ) {
-            Icon(
-                painter = painterResource(com.example.core.R.drawable.arrow_back_ic),
-                contentDescription = "Назад"
-            )
-        }
 
-        Text(
-            modifier = Modifier
-                .padding(start = 43.dp)
-                .align(Alignment.TopStart),
-            text = title,
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.Black,
-            softWrap = true
-        )
-    }
-}
 
 
 /**

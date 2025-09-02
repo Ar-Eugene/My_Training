@@ -28,10 +28,10 @@ val mockOgeTicketsEng2024 = listOf(
                     ),
                     Question(
                         id = "oge_eng_2024_t1_task1_q2",
-                        text = "Object on Eath?",
+                        text = "Object ?",
                         answerType = AnswerType.SINGLE_CHOICE,
-                        options = listOf("1", "2", "3", "4"),
-                        correctAnswers = listOf("2")
+                        options = listOf("o", "b", "j", "k"),
+                        correctAnswers = listOf("o")
                     )
                 )
             ),
