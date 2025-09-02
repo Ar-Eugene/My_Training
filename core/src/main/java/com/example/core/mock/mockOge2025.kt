@@ -7,6 +7,39 @@ import com.example.core.domain.models.Task
 import com.example.core.domain.models.Ticket
 
 /**
+ * Пример mock данных для ОГЭ Английский 2025
+ */
+val mockOgeTicketsEng2025 = listOf(
+    Ticket(
+        id = "oge_eng_2025_t1",
+        number = 1,
+        tasks = listOf(
+            Task(
+                id = "oge_eng_2025_t1_task1",
+                number = 1,
+                questions = listOf(
+                    Question(
+                        id = "oge_eng_2025_t1_task1_q1",
+                        text = "Are you like Alina?",
+                        answerType = AnswerType.SINGLE_CHOICE,
+                        options = listOf("да", "нет", "не очень"),
+                        correctAnswers = listOf("да")
+                    )
+                )
+            )
+        )
+    )
+)
+
+val mockOgeEssaysEng2025 = listOf(
+    Essay(
+        id = "oge_eng_2025_essay1",
+        title = "How are you like Alina",
+        description = "Wer"
+    )
+)
+
+/**
  * Пример mock данных для ОГЭ Русский 2025
  */
 

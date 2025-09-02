@@ -6,11 +6,11 @@ import javax.inject.Inject
 
 class ExamInteractorImpl @Inject constructor(private val examPreferencesRepository: ExamPreferencesRepository) :
     ExamInteractor {
-    override suspend fun saveExamType(examType: ExamType) {
+    override suspend fun saveExamScreen(examType: ExamType) {
         return examPreferencesRepository.saveExamType(examType)
     }
 
-    override suspend fun getExamType(): ExamType {
+    override fun getExamScreen(): ExamType {
         return examPreferencesRepository.getExamType()
     }
 }

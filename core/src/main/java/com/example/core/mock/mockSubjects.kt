@@ -12,7 +12,7 @@ val mockSubjects = listOf(
     // ЕГЭ Русский язык
     Subject(
         id = "ege_rus",
-        name = "Русский язык",
+        name = "Русский язык\nЕГЭ",
         examType = ExamType.EGE,
         years = listOf(
             YearData(
@@ -27,10 +27,10 @@ val mockSubjects = listOf(
             )
         )
     ),
-    // ЕГЭ Анлигйский язык
+    // ЕГЭ Английский язык
     Subject(
         id = "ege_eng",
-        name = "Анлигйский язык",
+        name = "Английский язык ЕГЭ",
         examType = ExamType.EGE,
         years = listOf(
             YearData(
@@ -44,23 +44,28 @@ val mockSubjects = listOf(
         )
     ),
 
-    // ОГЭ Анлигйский язык
+    // ОГЭ Английский язык
     Subject(
         id = "oge_english",
-        name = "Анлигйский язык",
+        name = "Английский язык ОГЭ",
         examType = ExamType.OGE,
         years = listOf(
             YearData(
                 year = 2024,
                 tickets = mockOgeTicketsEng2024,
                 essays = mockOgeEssaysEng2024
+            ),
+            YearData(
+                year = 2025,
+                tickets = mockOgeTicketsEng2025,
+                essays = mockOgeEssaysEng2025
             )
         )
     ),
     // ОГЭ Русский язык
     Subject(
         id = "oge_rus",
-        name = "Русский язык",
+        name = "Русский язык ОГЭ",
         examType = ExamType.OGE,
         years = listOf(
             YearData(
