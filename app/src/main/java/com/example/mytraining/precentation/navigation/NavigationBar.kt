@@ -25,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.core.ui.theme.BottomNavigationColor
 import com.example.feature_favorites.presentation.ui.FavoriteScreen
+import com.example.feature_oge.presentation.ui.SelectionTrainingSectionScreen
 import com.example.feature_oge.presentation.ui.YearSelectionScreen
 import com.example.feature_oge.presentation.ui.TicketsScreen
 import com.example.feature_oge.presentation.ui.TicketDetailsScreen
@@ -60,38 +61,58 @@ fun AppNavHost(
         }
         composable("tarif-screen") { TarifScreen { navController.popBackStack() } }
 
-        // Новые маршруты для ОГЭ
+        // переход на экран выбора года
         composable("year-selection/{subjectId}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             YearSelectionScreen(
                 subjectId = subjectId,
                 onYearClick = { subjectId, year ->
-                    navController.navigate("tickets/$subjectId/$year")
+                    navController.navigate("training-section/$subjectId/$year")
                 },
                 onNavigate = { navController.popBackStack() }
             )
         }
 
-        composable("tickets/{subjectId}/{year}") { backStackEntry ->
+        // переход на экран выбора раздела обучения
+        composable("training-section/{subjectId}/{year}/") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
+            SelectionTrainingSectionScreen(
+                subjectId = subjectId,
+                year = year,
+                onSectionClick = { subjectId, year, section ->
+                    navController.navigate("tickets/$subjectId/$year/$section")
+                },
+                onNavigate = { navController.popBackStack() }
+            )
+        }
+
+        // переход на экран выбора выбора билета
+        composable("tickets/{subjectId}/{year}/{training-section}") { backStackEntry ->
+            val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
+            val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
+            val trainingSection = backStackEntry.arguments?.getString("training-section") ?: ""
             TicketsScreen(
                 subjectId = subjectId,
                 year = year,
-                onTicketClick = { subjectId, year, ticketNumber ->
-                    navController.navigate("ticket-details/$subjectId/$year/$ticketNumber")
+                trainingSection = trainingSection,
+                onTicketClick = { subjectId, year, trainingSection, ticketNumber ->
+                    navController.navigate("ticket-details/$subjectId/$year/$trainingSection/$ticketNumber")
                 }
             )
         }
 
-        composable("ticket-details/{subjectId}/{year}/{ticketNumber}") { backStackEntry ->
+        // переход на экран списка вопросов из билета
+        composable("ticket-details/{subjectId}/{year}/{training-section}/{ticketNumber}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
+            val trainingSection = backStackEntry.arguments?.getString("training-section") ?: ""
             val ticketNumber =
                 backStackEntry.arguments?.getString("ticketNumber")?.toIntOrNull() ?: 0
             TicketDetailsScreen(
                 subjectId = subjectId,
                 year = year,
+                trainingSection = trainingSection,
                 ticketNumber = ticketNumber,
                 onBackClick = { navController.popBackStack() }
             )

@@ -17,3 +17,4 @@ object OgeModule {
         return OgeViewModel()
     }
 }
+

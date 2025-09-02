@@ -39,7 +39,7 @@ fun YearSelectionScreen(
     subjectId: String,
     modifier: Modifier = Modifier,
     onYearClick: (String, Int) -> Unit = { _, _ -> },
-    onNavigate: () -> Unit = {},
+    onNavigate: () -> Unit = {}
 ) {
     val backgroundGradientColor = listOf(
         BackgroundGradientGreen, BackgroundGradientBlue
@@ -55,7 +55,7 @@ fun YearSelectionScreen(
             .padding(horizontal = 16.dp)
 
     ) {
-        TopIconButtonAndText(onClick = onNavigate, title = "Выберите год: ${subject?.name ?: ""}")
+        TopIconButtonAndText(onClick = onNavigate, title = "${subject?.name ?: ""}")
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),

@@ -27,8 +27,9 @@ import com.example.core.ui.theme.BottomNavigationColor
 fun TicketsScreen(
     subjectId: String,
     year: Int,
+    trainingSection:String,
     modifier: Modifier = Modifier,
-    onTicketClick: (String, Int, Int) -> Unit = { _, _, _ -> }
+    onTicketClick: (String, Int,String,Int) -> Unit = { _, _, _,_ -> }
 ) {
     // Находим предмет и год
     val subject = mockSubjects.find { it.id == subjectId }

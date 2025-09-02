@@ -38,6 +38,7 @@ import com.example.core.ui.theme.BottomNavigationColor
 fun TicketDetailsScreen(
     subjectId: String,
     year: Int,
+    trainingSection:String,
     ticketNumber: Int,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {}
