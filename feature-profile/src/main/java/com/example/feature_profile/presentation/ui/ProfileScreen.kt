@@ -132,7 +132,7 @@ fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
 fun CardАctionSelection(
     onClick: () -> Unit,
     StartIconAction: Painter,
-    descriptionAction: String
+    descriptionAction: String,
 ) {
     val backgroundGradientColor = listOf(
         CardBackgroundGradientGreen, CardBackgroundGradientBrown,
