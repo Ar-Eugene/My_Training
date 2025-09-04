@@ -51,14 +51,14 @@ val mockSubjects = listOf(
         examType = ExamType.OGE,
         years = listOf(
             YearData(
-                year = 2024,
-                tickets = mockOgeTicketsEng2024,
-                essays = mockOgeEssaysEng2024
-            ),
-            YearData(
                 year = 2025,
                 tickets = mockOgeTicketsEng2025,
                 essays = mockOgeEssaysEng2025
+            ),
+            YearData(
+                year = 2024,
+                tickets = mockOgeTicketsEng2024,
+                essays = mockOgeEssaysEng2024
             )
         )
     ),

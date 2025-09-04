@@ -104,7 +104,8 @@ fun AppNavHost(
                 trainingSection = trainingSection,
                 onTicketClick = { subjectId, year, trainingSection, ticketNumber ->
                     navController.navigate("ticket-details/$subjectId/$year/$trainingSection/$ticketNumber")
-                }
+                },
+                onNavigate = { navController.popBackStack() }
             )
         }
 
@@ -138,10 +139,9 @@ fun AppNavHost(
         // переход на экран теории
         composable("theory/{subjectId}/{year}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
-            val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
+            //val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
             TheoryScreen(
                 subjectId = subjectId,
-                year = year,
                 onBackClick = { navController.popBackStack() }
             )
         }

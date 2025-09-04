@@ -3,21 +3,21 @@ package com.example.feature_oge.presentation.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,16 +38,16 @@ import com.example.core.ui.theme.BottomNavigationColor
 fun TicketDetailsScreen(
     subjectId: String,
     year: Int,
-    trainingSection:String,
+    trainingSection: String,
     ticketNumber: Int,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
 ) {
     // Находим предмет, год и билет
     val subject = mockSubjects.find { it.id == subjectId }
     val yearData = subject?.years?.find { it.year == year }
     val ticket = yearData?.tickets?.find { it.number == ticketNumber }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,14 +71,14 @@ fun TicketDetailsScreen(
             ) {
                 Text("← Назад")
             }
-            
+
             Text(
                 text = "Билет $ticketNumber",
                 style = MaterialTheme.typography.headlineMedium,
                 color = Color.White
             )
         }
-        
+
         Text(
             text = "${subject?.name ?: ""} $year",
             style = MaterialTheme.typography.titleMedium,
@@ -120,7 +120,7 @@ fun TaskCard(task: com.example.core.domain.models.Task) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
-            
+
             // Список вопросов
             task.questions.forEachIndexed { questionIndex, question ->
                 QuestionItem(
@@ -137,11 +137,11 @@ fun TaskCard(task: com.example.core.domain.models.Task) {
 fun QuestionItem(
     question: com.example.core.domain.models.Question,
     questionNumber: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var selectedAnswer by remember { mutableStateOf<String?>(null) }
     var selectedMultipleAnswers by remember { mutableStateOf(mutableSetOf<String>()) }
-    
+
     Column(modifier = modifier) {
         // Текст вопроса
         Text(
@@ -150,7 +150,7 @@ fun QuestionItem(
             color = Color.White,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        
+
         // Варианты ответов в зависимости от типа
         when (question.answerType) {
             AnswerType.SINGLE_CHOICE -> {
@@ -172,6 +172,7 @@ fun QuestionItem(
                     }
                 }
             }
+
             AnswerType.MULTIPLE_CHOICE -> {
                 Text(
                     text = "Выберите несколько вариантов ответа:",
@@ -203,6 +204,7 @@ fun QuestionItem(
                     }
                 }
             }
+
             AnswerType.TEXT_ANSWER -> {
                 Text(
                     text = "Текстовый ответ",
@@ -217,7 +219,7 @@ fun QuestionItem(
                 )
             }
         }
-        
+
         // Правильный ответ (для демонстрации)
         if (selectedAnswer != null || selectedMultipleAnswers.isNotEmpty()) {
             Text(

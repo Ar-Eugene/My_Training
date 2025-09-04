@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="choose_subgect_txt">Выберите предмет</string>
+    <string name="theoretical_material_txt">Теория</string>
 </resources>
