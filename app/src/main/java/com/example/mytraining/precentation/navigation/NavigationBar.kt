@@ -113,13 +113,11 @@ fun AppNavHost(
         composable("ticket-details/{subjectId}/{year}/{training-section}/{ticketNumber}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
-            val trainingSection = backStackEntry.arguments?.getString("training-section") ?: ""
             val ticketNumber =
                 backStackEntry.arguments?.getString("ticketNumber")?.toIntOrNull() ?: 0
             TicketDetailsScreen(
                 subjectId = subjectId,
                 year = year,
-                trainingSection = trainingSection,
                 ticketNumber = ticketNumber,
                 onBackClick = { navController.popBackStack() }
             )

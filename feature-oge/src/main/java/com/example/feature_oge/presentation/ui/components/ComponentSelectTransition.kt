@@ -23,7 +23,7 @@ import com.example.core.ui.theme.CardBackgroundGradientBrown
 import com.example.core.R
 
 /**
- * Метод отвечающий кнопку перехода к следующему экрану
+ * Метод отвечающий за кнопку перехода к следующему экрану
  */
 @Composable
 fun ComponentSelectTransition(
