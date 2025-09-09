@@ -1,5 +1,6 @@
 package com.example.feature_oge.presentation.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -23,6 +26,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
@@ -49,6 +53,7 @@ import com.example.core.mock.mockSubjects
 import com.example.core.ui.theme.BackgroundGradientBlue
 import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.BottomNavigationColor
+import com.example.feature_oge.presentation.ui.components.AlertDialogExample
 import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
 
 @Composable
@@ -61,6 +66,10 @@ fun TicketDetailsScreen(
     val backgroundGradientColor = listOf(
         BackgroundGradientGreen, BackgroundGradientBlue
     )
+
+    // диалоговое окно при выходе
+    var showDialog by remember { mutableStateOf(false) }
+
     val subject = mockSubjects.find { it.id == subjectId }
     val yearData = subject?.years?.find { it.year == year }
     val ticket = yearData?.tickets?.find { it.number == ticketNumber }
@@ -73,6 +82,24 @@ fun TicketDetailsScreen(
     // Состояние для ответов
     val answers = remember { mutableStateMapOf<String, AnswerState>() }
 
+    // Перехватываем системную кнопку "Назад"
+    BackHandler {
+        showDialog = true
+    }
+    // Диалог подтверждения
+    if (showDialog) {
+        AlertDialogExample(
+            onDismissRequest = { showDialog = false },
+            onConfirmation = {
+                showDialog = false
+                onBackClick()
+            },
+            dialogTitle = stringResource(com.example.feature_oge.R.string.confirm),
+            dialogText = stringResource(com.example.feature_oge.R.string.are_you_sure),
+            icon = Icons.Default.Warning
+        )
+    }
+
     Column(
         modifier = Modifier
             .background(brush = Brush.linearGradient(backgroundGradientColor))
@@ -81,8 +108,12 @@ fun TicketDetailsScreen(
             .navigationBarsPadding()
             .padding(horizontal = dimensionResource(R.dimen.padding_16dp))
     ) {
-        // Заголовок
-        TopIconButtonAndText(onClick = onBackClick, title = "Билет № $ticketNumber")
+
+        // Заголовок с кнопкой "Назад"
+        TopIconButtonAndText(
+            onClick = { showDialog = true }, // вместо прямого выхода
+            title = "Билет № $ticketNumber"
+        )
 
         // Горизонтальная прокрутка
         val pagerState = rememberPagerState(pageCount = { allQuestions.size })
@@ -266,7 +297,7 @@ fun QuestionItem(
             }
 
             AnswerType.TEXT_ANSWER -> {
-                // 🔹 Состояния для текста и подтверждения
+                // Состояния для текста и подтверждения
                 var userInput by rememberSaveable { mutableStateOf(selectedAnswer ?: "") }
 
                 // Картинка (если есть)
@@ -283,15 +314,11 @@ fun QuestionItem(
                     )
                 }
 
-                // Поле ввода
-                TextField(
-                    value = userInput,
-                    onValueChange = { if (enabled) userInput = it },
-                    placeholder = { Text("Введите ответ") },
-                    enabled = enabled,
-                    modifier = Modifier.fillMaxWidth()
+                AnswerTextField(
+                    userInput = userInput,
+                    onValueChange = { userInput = it },
+                    enabled = enabled
                 )
-
 
                 if (enabled) {
                     onAnswerSelected(userInput)
@@ -301,7 +328,10 @@ fun QuestionItem(
     }
 }
 
-// метод отвечающий за размещение и отображение вариантов ответов и за сам ответ
+/**
+Отвечает за размещение и отображение вариантов ответов и за сам ответ
+ */
+
 @Composable
 fun AnswerOptionItem(
     option: String,
@@ -326,3 +356,36 @@ fun AnswerOptionItem(
         )
     }
 }
+
+/**
+Отвечает за поле ввода при TEXT_ANSWER
+ */
+@Composable
+fun AnswerTextField(
+    userInput: String,
+    onValueChange: (String) -> Unit,
+    enabled: Boolean,
+    placeholder: String = "Введите ответ",
+) {
+    TextField(
+        value = userInput,
+        onValueChange = { if (enabled) onValueChange(it) },
+        placeholder = { Text(placeholder) },
+        textStyle = MaterialTheme.typography.labelSmall,
+        maxLines = 1,
+        singleLine = true,
+        enabled = enabled,
+        modifier = Modifier.fillMaxWidth(),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            disabledContainerColor = Color.White,
+            errorContainerColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent
+        )
+    )
+}
+
