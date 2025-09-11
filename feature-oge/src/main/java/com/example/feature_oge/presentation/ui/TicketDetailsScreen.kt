@@ -2,6 +2,7 @@ package com.example.feature_oge.presentation.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,10 +29,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -42,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -55,6 +59,7 @@ import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.BottomNavigationColor
 import com.example.feature_oge.presentation.ui.components.AlertDialogExample
 import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
+import kotlinx.coroutines.launch
 
 @Composable
 fun TicketDetailsScreen(
@@ -82,10 +87,61 @@ fun TicketDetailsScreen(
     // Состояние для ответов
     val answers = remember { mutableStateMapOf<String, AnswerState>() }
 
+    // Проверяем, все ли вопросы отвечены
+    val allQuestionsAnswered by remember {
+        derivedStateOf {
+            allQuestions.all { (taskNumber, question) ->
+                val key = "${taskNumber}-${question.id}"
+                val answerState = answers[key]
+                when (question.answerType) {
+                    AnswerType.SINGLE_CHOICE -> answerState?.answer != null
+                    AnswerType.MULTIPLE_CHOICE -> answerState?.confirmed == true
+                    AnswerType.TEXT_ANSWER -> answerState?.confirmed == true &&
+                            answerState.answer is String &&
+                            (answerState.answer as String).isNotBlank()
+                }
+            }
+        }
+    }
+
+
+    // считаем количество правильных ответов
+    val correctAnswersCount by remember {
+        derivedStateOf {
+            allQuestions.count { (taskNumber, question) ->
+                val key = "${taskNumber}-${question.id}"
+                val answerState = answers[key]
+
+                when (question.answerType) {
+                    AnswerType.SINGLE_CHOICE ->
+                        (answerState?.answer as? String)?.let { it in question.correctAnswers } == true
+
+                    AnswerType.MULTIPLE_CHOICE ->
+                        answerState?.confirmed == true &&
+                                (answerState.answer as? Set<String>) == question.correctAnswers.toSet()
+
+                    AnswerType.TEXT_ANSWER ->
+                        answerState?.confirmed == true &&
+                                (answerState.answer as? String)?.trim()?.lowercase() in
+                                question.correctAnswers.map { it.lowercase() }
+
+                    else -> false
+                }
+            }
+        }
+    }
+
+
     // Перехватываем системную кнопку "Назад"
     BackHandler {
-        showDialog = true
+        // Показываем диалог только если не все вопросы отвечены
+        if (!allQuestionsAnswered) {
+            showDialog = true
+        } else {
+            onBackClick() // Если все отвечено, просто выходим
+        }
     }
+
     // Диалог подтверждения
     if (showDialog) {
         AlertDialogExample(
@@ -111,36 +167,92 @@ fun TicketDetailsScreen(
 
         // Заголовок с кнопкой "Назад"
         TopIconButtonAndText(
-            onClick = { showDialog = true }, // вместо прямого выхода
+            onClick = {
+                // Показываем диалог только если не все вопросы отвечены
+                if (!allQuestionsAnswered) {
+                    showDialog = true
+                } else {
+                    onBackClick()// Если все отвечено, просто выходим
+                }
+            }, // вместо прямого выхода
             title = "Билет № $ticketNumber"
         )
 
         // Горизонтальная прокрутка
-        val pagerState = rememberPagerState(pageCount = { allQuestions.size })
+        val pagerState = rememberPagerState(pageCount = { allQuestions.size + 1 })
+        val scope = rememberCoroutineScope()
 
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { page ->
-            val (taskNumber, question) = allQuestions[page]
-            val key = "${taskNumber}-${question.id}"
+            if (page < allQuestions.size) {
+                // обычные вопросы
+                val (taskNumber, question) = allQuestions[page]
+                val key = "${taskNumber}-${question.id}"
 
-            TaskCardTicketScreen(
-                taskNumber = taskNumber,
-                questionNumber = page + 1,
-                question = question,
-                answerState = answers[key] ?: AnswerState(),
-                onAnswerSelected = { answer ->
-                    answers[key] = AnswerState(answer = answer)
-                },
-                onMultipleAnswersSelected = { selected ->
-                    answers[key] = AnswerState(answer = selected)
-                },
-                onConfirm = {
-                    answers[key] =
-                        answers[key]?.copy(confirmed = true) ?: AnswerState(confirmed = true)
+                TaskCardTicketScreen(
+                    taskNumber = taskNumber,
+                    questionNumber = page + 1,
+                    question = question,
+                    answerState = answers[key] ?: AnswerState(),
+                    onAnswerSelected = { answer ->
+                        answers[key] = AnswerState(answer = answer)
+                    },
+                    onMultipleAnswersSelected = { selected ->
+                        answers[key] = AnswerState(answer = selected)
+                    },
+                    onConfirm = {
+                        answers[key] =
+                            answers[key]?.copy(confirmed = true) ?: AnswerState(confirmed = true)
+                    }
+                )
+            } else {
+                // последняя страница – результат
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    if (allQuestionsAnswered) {
+                        Text(
+                            text = "Вы ответили правильно на $correctAnswersCount из ${allQuestions.size} вопросов",
+                            style = MaterialTheme.typography.displayLarge,
+                            fontSize = 22.sp,
+                            textAlign = TextAlign.Center,
+                            color = if (correctAnswersCount >= allQuestions.size / 2) Color(
+                                0xFF4CAF50
+                            ) else Color(0xFFF44336),
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
+
+                        Button(
+                            onClick = {
+                                answers.clear() // сброс ответов
+                                scope.launch {
+                                    pagerState.scrollToPage(0) // мгновенно кидаем на первую страницу
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = BackgroundGradientGreen,
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text("Пройти ещё раз")
+                        }
+                    } else {
+                        Text(
+                            text = "Ответьте на все вопросы, чтобы увидеть результат",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                            color = Color.White
+                        )
+                    }
                 }
-            )
+            }
         }
     }
 }
@@ -158,6 +270,13 @@ fun TaskCardTicketScreen(
     val selectedAnswer = answerState.answer as? String
     val selectedMultipleAnswers = answerState.answer as? Set<String> ?: emptySet()
     val confirmed = answerState.confirmed
+
+    // Проверка на валидность ответа для кнопки подтверждения
+    val isAnswerValid = when (question.answerType) {
+        AnswerType.MULTIPLE_CHOICE -> selectedMultipleAnswers.isNotEmpty()
+        AnswerType.TEXT_ANSWER -> !selectedAnswer.isNullOrBlank()
+        else -> true // Для SINGLE_CHOICE всегда true, так как там нет кнопки подтверждения
+    }
 
     // Определяем: отвечено или нет
     val isAnswered = when (question.answerType) {
@@ -214,12 +333,17 @@ fun TaskCardTicketScreen(
             // Кнопка подтверждения для MULTIPLE_CHOICE и TEXT_ANSWER
             if ((question.answerType == AnswerType.MULTIPLE_CHOICE || question.answerType == AnswerType.TEXT_ANSWER) && !confirmed) {
                 Button(
-                    onClick = { onConfirm() },
+                    onClick = {
+                        if (isAnswerValid) {
+                            onConfirm()
+                        }
+                    },
                     modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_12dp)),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = BackgroundGradientGreen,
+                        containerColor = if (isAnswerValid) BackgroundGradientGreen else Color.Gray,
                         contentColor = Color.White
-                    )
+                    ),
+                    enabled = isAnswerValid // Делаем кнопку неактивной при невалидном ответе
                 ) {
                     Text("Подтвердить")
                 }
@@ -316,7 +440,13 @@ fun QuestionItem(
 
                 AnswerTextField(
                     userInput = userInput,
-                    onValueChange = { userInput = it },
+                    onValueChange = {
+                        userInput = it
+                        // Передаем ответ только если текст не пустой
+                        if (it.isNotBlank()) {
+                            onAnswerSelected(it)
+                        }
+                    },
                     enabled = enabled
                 )
 
@@ -385,7 +515,8 @@ fun AnswerTextField(
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
             errorIndicatorColor = Color.Transparent
-        )
+        ),
+        // isError = enabled && userInput.isBlank() // Показываем ошибку если поле пустое и активно
     )
 }
 

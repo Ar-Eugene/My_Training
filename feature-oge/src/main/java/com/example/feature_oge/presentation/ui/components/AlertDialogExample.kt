@@ -16,6 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
+/**
+ * Диалоговое окно перед закрытием экрана если ответили не на все вопросы
+ */
 @Composable
 fun AlertDialogExample(
     onDismissRequest: () -> Unit,
@@ -54,7 +57,8 @@ fun AlertDialogExample(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 TextButton(onClick = { onDismissRequest() }) {
-                    Text(text = "Нет",
+                    Text(
+                        text = "Нет",
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
@@ -62,7 +66,8 @@ fun AlertDialogExample(
                     )
                 }
                 TextButton(onClick = { onConfirmation() }) {
-                    Text(text = "Да",
+                    Text(
+                        text = "Да",
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
