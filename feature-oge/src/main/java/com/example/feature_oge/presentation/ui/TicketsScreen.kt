@@ -1,51 +1,56 @@
 package com.example.feature_oge.presentation.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.core.R
 import com.example.core.mock.mockSubjects
-import com.example.core.ui.theme.BottomNavigationColor
+import com.example.core.ui.theme.BackgroundGradientBlue
+import com.example.core.ui.theme.BackgroundGradientGreen
+import com.example.feature_oge.presentation.ui.components.ComponentSelectTransition
+import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
 
 @Composable
 fun TicketsScreen(
     subjectId: String,
     year: Int,
+    trainingSection: String,
     modifier: Modifier = Modifier,
-    onTicketClick: (String, Int, Int) -> Unit = { _, _, _ -> }
+    onTicketClick: (String, Int, String, Int) -> Unit = { _, _, _, _ -> },
+    onNavigate: () -> Unit = {},
 ) {
+
+    val backgroundGradientColor = listOf(
+        BackgroundGradientGreen, BackgroundGradientBlue
+    )
+
     // Находим предмет и год
     val subject = mockSubjects.find { it.id == subjectId }
     val yearData = subject?.years?.find { it.year == year }
-    
+
     Column(
         modifier = Modifier
+            .background(brush = Brush.linearGradient(backgroundGradientColor))
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = dimensionResource(R.dimen.padding_16dp))
     ) {
+
         // Заголовок
-        Text(
-            text = "Билеты: ${subject?.name ?: ""} $year",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.White,
-            modifier = Modifier.padding(vertical = 16.dp)
+        TopIconButtonAndText(
+            onClick = onNavigate,
+            title = "Билеты: ${subject?.name ?: ""} $year"
         )
 
         // Список билетов
@@ -55,11 +60,11 @@ fun TicketsScreen(
         ) {
             yearData?.tickets?.let { tickets ->
                 items(tickets) { ticket ->
-                    TicketItem(
+                    ComponentSelectTransition(
                         modifier = Modifier.fillMaxWidth(),
                         text = "Билет ${ticket.number}",
                         onClick = {
-                            onTicketClick(subjectId, year, ticket.number)
+                            onTicketClick(subjectId, year, trainingSection, ticket.number)
                         }
                     )
                 }
@@ -67,28 +72,3 @@ fun TicketsScreen(
         }
     }
 }
-
-@Composable
-fun TicketItem(
-    modifier: Modifier = Modifier,
-    text: String,
-    onClick: () -> Unit,
-) {
-    Button(
-        modifier = modifier
-            .height(60.dp),
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = BottomNavigationColor.copy(alpha = 0.9f),
-            contentColor = Color(0xFF324379)
-        ),
-        shape = RoundedCornerShape(dimensionResource(com.example.core.R.dimen.padding_8dp)),
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-    }
-} 

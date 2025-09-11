@@ -65,4 +65,8 @@ dependencies {
     implementation(libs.com.hilt)
     ksp(libs.com.hilt.ksp)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //Coil
+    implementation(libs.coil.compose)
+    implementation(libs.play.services.location)
 }

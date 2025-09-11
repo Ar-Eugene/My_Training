@@ -28,10 +28,10 @@ val mockOgeTicketsEng2024 = listOf(
                     ),
                     Question(
                         id = "oge_eng_2024_t1_task1_q2",
-                        text = "Object on Eath?",
+                        text = "Object ?",
                         answerType = AnswerType.SINGLE_CHOICE,
-                        options = listOf("1", "2", "3", "4"),
-                        correctAnswers = listOf("2")
+                        options = listOf("o", "b", "j", "k"),
+                        correctAnswers = listOf("o")
                     )
                 )
             ),
@@ -41,10 +41,23 @@ val mockOgeTicketsEng2024 = listOf(
                 questions = listOf(
                     Question(
                         id = "oge_eng_2024_t1_task2_q1",
-                        text = "Where W ?",
-                        answerType = AnswerType.SINGLE_CHOICE,
+                        text = "Where W or T ?",
+                        answerType = AnswerType.MULTIPLE_CHOICE,
                         options = listOf("w", "t", "y", "a"),
-                        correctAnswers = listOf("w")
+                        correctAnswers = listOf("w", "t")
+                    )
+                )
+            ),
+            Task(
+                id = "oge_eng_2024_t1_task3",
+                number = 3,
+                questions = listOf(
+                    Question(
+                        id = "oge_eng_2024_t1_task3_q1",
+                        text = "What is shown ?",
+                        imageUrl ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRarff7pIgGV2lt2rxFK-RWZT9H9opYwYlXag&s" ,
+                        answerType = AnswerType.TEXT_ANSWER,
+                        correctAnswers = listOf("chair")
                     )
                 )
             )

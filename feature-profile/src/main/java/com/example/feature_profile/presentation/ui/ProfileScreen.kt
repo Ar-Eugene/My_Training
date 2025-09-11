@@ -33,10 +33,10 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.CardBackgroundGradientGreen
+import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.CardBackgroundGradientBrown
+import com.example.core.ui.theme.CardBackgroundGradientGreen
 import com.example.feature_profile.R
 
 /**
@@ -132,7 +132,7 @@ fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
 fun CardАctionSelection(
     onClick: () -> Unit,
     StartIconAction: Painter,
-    descriptionAction: String
+    descriptionAction: String,
 ) {
     val backgroundGradientColor = listOf(
         CardBackgroundGradientGreen, CardBackgroundGradientBrown,

@@ -44,8 +44,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.core.ui.theme.BackgroundGradientBlue
+import com.example.core.ui.theme.BackgroundGradientGreen
 import com.example.feature_profile.R
 
 
@@ -154,7 +154,7 @@ fun ChoiceTarife(
     @DrawableRes iconRes: Int,
     @StringRes titleRes: Int,
     @StringRes priceRes: Int,
-    @StringRes descriptionRes: Int
+    @StringRes descriptionRes: Int,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -201,7 +201,7 @@ fun AllCardElements(
     @StringRes titleRes: Int,
     @StringRes tarifRes: Int,
     @StringRes descriptionRes: Int,
-    expanded: Boolean
+    expanded: Boolean,
 ) {
     Row(
         modifier = Modifier
@@ -226,7 +226,7 @@ fun AllCardElements(
 
 @Composable
 private fun DescriptionItemButton(
-    expanded: Boolean
+    expanded: Boolean,
 ) {
     Icon(
         painter = if (expanded) {
@@ -246,7 +246,7 @@ private fun DescriptionItemButton(
 @Composable
 fun TarifIcon(
     @DrawableRes tarifIconRes: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Image(
         modifier = modifier
@@ -267,7 +267,7 @@ fun TarifIcon(
 fun TarifPrice(
     @StringRes tarif: Int,
     @StringRes tarifPrice: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -289,7 +289,7 @@ fun TarifPrice(
 fun DescriptionTarif(
     @StringRes descriptionTarif: Int,
     //onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
