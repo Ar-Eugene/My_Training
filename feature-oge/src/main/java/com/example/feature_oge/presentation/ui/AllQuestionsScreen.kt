@@ -77,22 +77,20 @@ fun AllQuestionsScreen(
     val subject = mockSubjects.find { it.id == subjectId }
     val yearData = subject?.years?.find { it.year == year }
 
-    // Получаем все вопросы из всех билетов
-    val allQuestions = yearData?.tickets?.flatMap { ticket ->
-        // Обрабатываем билеты по порядку
-        ticket.tasks.flatMap { task ->
-            // Обрабатываем задания по порядку
-            task.questions.map { question ->
-                // Обрабатываем вопросы по порядку
-                QuestionWithContext(
-                    question = question,
-                    ticketNumber = ticket.number,
-                    taskNumber = task.number
-                )
+    // Получаем все вопросы из всех билетов и сохраняем перемешанный порядок
+    val allQuestions = remember(subject) {
+        yearData?.tickets?.flatMap { ticket ->
+            ticket.tasks.flatMap { task ->
+                task.questions.map { question ->
+                    QuestionWithContext(
+                        question = question,
+                        ticketNumber = ticket.number,
+                        taskNumber = task.number
+                    )
+                }
             }
-        }
-    }?.shuffled()
-        ?: emptyList() // добавив shuffled у меня вопросы перемешиваются можно поместить в любое место в обработке, чтобы перемешивать только ту часть что нужно
+        }?.shuffled() ?: emptyList()
+    }
 
     // Состояние для ответов
     val answers = remember { mutableStateMapOf<String, AnswerState>() }
