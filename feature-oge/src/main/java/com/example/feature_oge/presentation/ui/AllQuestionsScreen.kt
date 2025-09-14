@@ -64,6 +64,8 @@ import kotlinx.coroutines.launch
 fun AllQuestionsScreen(
     subjectId: String,
     year: Int,
+    trainingSection: String,
+    taskId: String,
     onBackClick: () -> Unit = {},
 ) {
     val backgroundGradientColor = listOf(
@@ -77,19 +79,43 @@ fun AllQuestionsScreen(
     val subject = mockSubjects.find { it.id == subjectId }
     val yearData = subject?.years?.find { it.year == year }
 
-    // Получаем все вопросы из всех билетов и сохраняем перемешанный порядок
-    val allQuestions = remember(subject) {
-        yearData?.tickets?.flatMap { ticket ->
-            ticket.tasks.flatMap { task ->
-                task.questions.map { question ->
-                    QuestionWithContext(
-                        question = question,
-                        ticketNumber = ticket.number,
-                        taskNumber = task.number
-                    )
+    // Определяем номер задания из taskId
+    val taskNumber = when (taskId) {
+        "all-questions-task1" -> 1
+        "all-questions-task2" -> 2
+        "all-questions-task3" -> 3
+        else -> null
+    }
+
+    // Получаем вопросы только из выбранного задания
+    val allQuestions = remember(subject, taskNumber) {
+        if (taskNumber != null) {
+            yearData?.tickets?.flatMap { ticket ->
+                ticket.tasks.filter { task -> task.number == taskNumber }
+                    .flatMap { task ->
+                        task.questions.map { question ->
+                            QuestionWithContext(
+                                question = question,
+                                ticketNumber = ticket.number,
+                                taskNumber = task.number
+                            )
+                        }
+                    }
+            }?.shuffled() ?: emptyList()
+        } else {
+            // Если taskNumber не определен, показываем все вопросы (старое поведение)
+            yearData?.tickets?.flatMap { ticket ->
+                ticket.tasks.flatMap { task ->
+                    task.questions.map { question ->
+                        QuestionWithContext(
+                            question = question,
+                            ticketNumber = ticket.number,
+                            taskNumber = task.number
+                        )
+                    }
                 }
-            }
-        }?.shuffled() ?: emptyList()
+            }?.shuffled() ?: emptyList()
+        }
     }
 
     // Состояние для ответов
