@@ -515,8 +515,7 @@ fun AnswerTextField(
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
             errorIndicatorColor = Color.Transparent
-        ),
-        // isError = enabled && userInput.isBlank() // Показываем ошибку если поле пустое и активно
+        )
     )
 }
 
