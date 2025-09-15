@@ -40,8 +40,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.domain.models.ExamType
 import com.example.core.domain.models.Subject
 import com.example.core.mock.mockSubjects
-import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.CardBackgroundGradientBrown
+import com.example.core.precentation.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.CardBackgroundGradientBrown
 import com.example.feature_oge.R
 import com.example.feature_oge.presentation.viewmodel.OgeViewModel
 

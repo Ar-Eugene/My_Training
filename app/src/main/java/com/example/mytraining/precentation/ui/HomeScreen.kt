@@ -31,10 +31,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.domain.models.ExamType
-import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.BackgroundGradientGreen
-import com.example.core.ui.theme.BottomNavigationColor
-import com.example.core.ui.theme.CardBackgroundGradientBrown
+import com.example.core.precentation.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.BackgroundGradientGreen
+import com.example.core.precentation.theme.BottomNavigationColor
+import com.example.core.precentation.theme.CardBackgroundGradientBrown
 import com.example.feature_ege.presentation.ui.EgeScreen
 import com.example.feature_oge.presentation.ui.OgeScreen
 import com.example.mytraining.precentation.viewmodel.HomeViewModel

@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import com.example.core.ui.theme.BackgroundGradientGreen
-import com.example.core.ui.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.BackgroundGradientGreen
+import com.example.core.precentation.theme.BackgroundGradientBlue
 
 @Composable
 fun FavoriteScreen(modifier: Modifier = Modifier) {

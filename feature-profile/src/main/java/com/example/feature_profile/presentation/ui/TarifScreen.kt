@@ -44,8 +44,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.BackgroundGradientGreen
+import com.example.core.precentation.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.BackgroundGradientGreen
 import com.example.feature_profile.R
 
 
