@@ -27,6 +27,7 @@ import com.example.core.ui.theme.BottomNavigationColor
 import com.example.feature_favorites.presentation.ui.FavoriteScreen
 import com.example.feature_oge.presentation.ui.AllQuestionsScreen
 import com.example.feature_oge.presentation.ui.SelectionTrainingSectionScreen
+import com.example.feature_oge.presentation.ui.TaskSelectionTicketScreen
 import com.example.feature_oge.presentation.ui.TheoryScreen
 import com.example.feature_oge.presentation.ui.TicketDetailsScreen
 import com.example.feature_oge.presentation.ui.TicketsScreen
@@ -82,10 +83,10 @@ fun AppNavHost(
             SelectionTrainingSectionScreen(
                 subjectId = subjectId,
                 year = year,
-                onSectionClick = { subjectId, year, section ->
-                    when (section) {
-                        "tickets" -> navController.navigate("tickets/$subjectId/$year/tickets")
-                        "all-questions" -> navController.navigate("all-questions/$subjectId/$year")
+                onSectionClick = { subjectId, year, trainingSection ->
+                    when (trainingSection) {
+                        "tickets" -> navController.navigate("tickets/$subjectId/$year/$trainingSection")
+                        "all-questions" -> navController.navigate("task-selection/$subjectId/$year/$trainingSection")
                         "theory" -> navController.navigate("theory/$subjectId/$year")
                     }
                 },
@@ -93,7 +94,23 @@ fun AppNavHost(
             )
         }
 
-        // переход на экран выбора выбора билета
+        // переход на экран выбора типа заданий
+        composable("task-selection/{subjectId}/{year}/{training-section}") { backStackEntry ->
+            val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
+            val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
+            val trainingSection = backStackEntry.arguments?.getString("training-section") ?: ""
+            TaskSelectionTicketScreen(
+                subjectId = subjectId,
+                year = year,
+                trainingSection = trainingSection,
+                onTaskClick = { subjectId, year, trainingSection, taskId ->
+                    navController.navigate("all-questions/$subjectId/$year/$trainingSection/$taskId")
+                },
+                onNavigate = { navController.popBackStack() }
+            )
+        }
+
+        // переход на экран выбора билета
         composable("tickets/{subjectId}/{year}/{training-section}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
@@ -123,13 +140,17 @@ fun AppNavHost(
             )
         }
 
-        // переход на экран всех вопросов
-        composable("all-questions/{subjectId}/{year}") { backStackEntry ->
+        // переход на экран всех вопросов (ЕДИНСТВЕННЫЙ МАРШРУТ)
+        composable("all-questions/{subjectId}/{year}/{training-section}/{taskId}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
             val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
+            val trainingSection = backStackEntry.arguments?.getString("training-section") ?: ""
+            val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
             AllQuestionsScreen(
                 subjectId = subjectId,
                 year = year,
+                trainingSection = trainingSection,
+                taskId = taskId,
                 onBackClick = { navController.popBackStack() }
             )
         }
@@ -137,13 +158,11 @@ fun AppNavHost(
         // переход на экран теории
         composable("theory/{subjectId}/{year}") { backStackEntry ->
             val subjectId = backStackEntry.arguments?.getString("subjectId") ?: ""
-            //val year = backStackEntry.arguments?.getString("year")?.toIntOrNull() ?: 0
             TheoryScreen(
                 subjectId = subjectId,
                 onBackClick = { navController.popBackStack() }
             )
         }
-
     }
 }
 

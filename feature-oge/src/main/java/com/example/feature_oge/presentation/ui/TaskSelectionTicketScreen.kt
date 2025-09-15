@@ -26,14 +26,15 @@ import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
 
 /**
  *
- *  Экран где отображается список разделов обучения
+ *  Экран выбора типа вопросов (по заданиям)
  */
 
 @Composable
-fun SelectionTrainingSectionScreen(
+fun TaskSelectionTicketScreen(
     subjectId: String,
     year: Int,
-    onSectionClick: (String, Int, String) -> Unit = { _, _, _ -> },
+    trainingSection: String,
+    onTaskClick: (String, Int, String, String) -> Unit = { _, _, _, _ -> },
     onNavigate: () -> Unit = {},
 ) {
     val backgroundGradientColor = listOf(
@@ -45,9 +46,9 @@ fun SelectionTrainingSectionScreen(
 
     // Создаем список разделов обучения
     val trainingSections = listOf(
-        TrainingSection("tickets", "Задачи по билетам"),
-        TrainingSection("all-questions", "Изучить все вопросы"),
-        TrainingSection("theory", "Теория")
+        TrainingSection("all-questions-task1", "Вопросы из Задания № 1"),
+        TrainingSection("all-questions-task2", "Вопросы из Задания № 2"),
+        TrainingSection("all-questions-task3", "Вопросы из Задания № 3")
     )
 
     Column(
@@ -59,7 +60,7 @@ fun SelectionTrainingSectionScreen(
     ) {
         TopIconButtonAndText(
             onClick = onNavigate,
-            title = "${subject?.name ?: ""} $year"
+            title = "Выбор заданий: ${subject?.name ?: ""} $year"
         )
 
         LazyVerticalGrid(
@@ -73,7 +74,7 @@ fun SelectionTrainingSectionScreen(
                     modifier = Modifier.fillMaxWidth(),
                     section = section,
                     onClick = {
-                        onSectionClick(subjectId, year, section.id)
+                        onTaskClick(subjectId, year, trainingSection, section.id)
                     }
                 )
             }
