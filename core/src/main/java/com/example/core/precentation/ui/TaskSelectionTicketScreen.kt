@@ -1,4 +1,4 @@
-package com.example.feature_oge.presentation.ui
+package com.example.core.precentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,13 +19,12 @@ import androidx.compose.ui.res.dimensionResource
 import com.example.core.R
 import com.example.core.domain.models.TrainingSection
 import com.example.core.mock.mockSubjects
-import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.BackgroundGradientGreen
-import com.example.feature_oge.presentation.ui.components.RowContent
-import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
+import com.example.core.precentation.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.BackgroundGradientGreen
+import com.example.core.precentation.components.RowContent
+import com.example.core.precentation.components.TopIconButtonAndText
 
 /**
- *
  *  Экран выбора типа вопросов (по заданиям)
  */
 
@@ -45,7 +44,7 @@ fun TaskSelectionTicketScreen(
     val subject = mockSubjects.find { it.id == subjectId }
 
     // Создаем список разделов обучения
-    val trainingSections = listOf(
+    val questionSections = listOf(
         TrainingSection("all-questions-task1", "Вопросы из Задания № 1"),
         TrainingSection("all-questions-task2", "Вопросы из Задания № 2"),
         TrainingSection("all-questions-task3", "Вопросы из Задания № 3")
@@ -69,7 +68,7 @@ fun TaskSelectionTicketScreen(
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_6dp)),
             modifier = Modifier.fillMaxSize()
         ) {
-            items(trainingSections) { section ->
+            items(questionSections) { section ->
                 TrainingSectionCard(
                     modifier = Modifier.fillMaxWidth(),
                     section = section,

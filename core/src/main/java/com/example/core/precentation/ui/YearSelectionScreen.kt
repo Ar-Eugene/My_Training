@@ -1,4 +1,4 @@
-package com.example.feature_oge.presentation.ui
+package com.example.core.precentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,11 +16,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
 import com.example.core.R
 import com.example.core.mock.mockSubjects
-import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.BackgroundGradientGreen
-import com.example.feature_oge.presentation.ui.components.ComponentSelectTransition
-import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
+import com.example.core.precentation.components.ComponentSelectTransition
+import com.example.core.precentation.components.TopIconButtonAndText
+import com.example.core.precentation.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.BackgroundGradientGreen
 
+/**
+ * Экран для выбора года обучения
+ */
 @Composable
 fun YearSelectionScreen(
     subjectId: String,

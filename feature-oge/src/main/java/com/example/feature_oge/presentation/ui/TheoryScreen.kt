@@ -11,9 +11,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.core.mock.mockSubjects
-import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.BackgroundGradientGreen
-import com.example.feature_oge.presentation.ui.components.TopIconButtonAndText
+import com.example.core.precentation.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.BackgroundGradientGreen
+import com.example.core.precentation.components.TopIconButtonAndText
 import com.example.feature_oge.R
 
 @Composable

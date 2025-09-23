@@ -1,4 +1,4 @@
-package com.example.feature_oge.presentation.ui.components
+package com.example.core.precentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

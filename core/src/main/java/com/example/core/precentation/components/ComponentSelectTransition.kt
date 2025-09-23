@@ -1,4 +1,4 @@
-package com.example.feature_oge.presentation.ui.components
+package com.example.core.precentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -18,12 +18,12 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import com.example.core.ui.theme.BackgroundGradientBlue
-import com.example.core.ui.theme.CardBackgroundGradientBrown
+import com.example.core.precentation.theme.BackgroundGradientBlue
+import com.example.core.precentation.theme.CardBackgroundGradientBrown
 import com.example.core.R
 
 /**
- * Метод отвечающий за кнопку перехода к следующему экрану
+ * Отвечает за кнопку перехода к следующему экрану
  */
 @Composable
 fun ComponentSelectTransition(
@@ -42,7 +42,7 @@ fun ComponentSelectTransition(
 }
 
 /**
- * Метод отвечающий за размещение элементов в кнопке
+ * Отвечает за размещение элементов в кнопке
  */
 @Composable
 fun RowContent(text: String) {
@@ -72,7 +72,7 @@ fun RowContent(text: String) {
 }
 
 /**
- * Метод отвечающий за размещение текста в кнопке
+ * Отвечает за размещение текста в кнопке
  */
 @Composable
 private fun ContentText(text: String, modifier: Modifier = Modifier) {
@@ -87,7 +87,7 @@ private fun ContentText(text: String, modifier: Modifier = Modifier) {
 }
 
 /**
- * Метод отвечающий за размещение иконки в кнопке
+ * Отвечает за размещение иконки в кнопке
  */
 @Composable
 private fun ContentIcon() {

@@ -1,4 +1,4 @@
-package com.example.feature_oge.presentation.ui.components
+package com.example.core.precentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -50,7 +50,6 @@ fun AlertDialogExample(
         onDismissRequest = {
             onDismissRequest()
         },
-        // Вместо отдельных confirmButton/dismissButton
         confirmButton = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
