@@ -47,6 +47,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":feature-profile"))
+    implementation(project(":feature_register"))
     implementation(project(":feature-favorites"))
     implementation(project(":feature-oge"))
     implementation(project(":feature-ege"))

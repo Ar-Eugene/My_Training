@@ -15,3 +15,13 @@ val BackgroundGradientBlue = Color(0xFF8E9BDC)
 val CardBackgroundGradientGreen = Color(0xFF91BC54)
 val CardBackgroundGradientBrown= Color(0xFFE7AAAB)
 val BottomNavigationColor= Color(0xFFB7C5E0)
+
+val White= Color(0xFFFFFFFF)
+
+val WhiteSmoke= Color(0xFFF5F5F5)
+
+val Black = Color(0xFF000000)
+
+val Blue3= Color(0xFF2a5679)
+
+val Green= Color(0xFF235347)
