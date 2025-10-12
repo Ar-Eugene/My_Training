@@ -35,7 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.precentation.theme.Blue3
+import com.example.core.precentation.theme.Blue
 import com.example.core.precentation.theme.White
 import com.example.core.precentation.theme.WhiteSmoke
 import com.example.feature_register.R
@@ -49,7 +49,7 @@ fun AuthorizationScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Blue3)
+            .background(Blue)
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
@@ -96,7 +96,6 @@ fun AuthorizationScreen() {
                 ) {
 
                     Text(
-                        modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_16dp)),
                         text = stringResource(R.string.enter),
                         style = MaterialTheme.typography.displayLarge
                     )
@@ -116,7 +115,8 @@ fun AuthorizationScreen() {
                         onValueChange = { password = it },
                         placeholder = stringResource(R.string.enter_password),
                         icon = Icons.Default.Lock,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        isPassword = true
                     )
                     Spacer(modifier = Modifier.height(48.dp))
 
@@ -125,7 +125,7 @@ fun AuthorizationScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Blue3)
+                        colors = ButtonDefaults.buttonColors(containerColor = Blue)
                     ) {
                         Text(
                             stringResource(R.string.login),
@@ -147,9 +147,11 @@ fun AuthorizationScreen() {
                         )
                         Text(
                             text = stringResource(R.string.register),
-                            modifier = Modifier.clickable {
-                                // Обработка нажатия
-                            },
+                            modifier = Modifier
+                                .clickable {
+                                    // Обработка нажатия
+                                }
+                                .padding(start = 6.dp),
                             style = MaterialTheme.typography.bodyLarge.copy(
                                 color = MaterialTheme.colorScheme.primary
                             )

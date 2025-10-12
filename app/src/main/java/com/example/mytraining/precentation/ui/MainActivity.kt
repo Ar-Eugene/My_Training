@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.mytraining.precentation.navigation.NavigationBarExample
 import com.example.core.precentation.theme.MyTrainingTheme
 import com.example.feature_register.presentation.ui.AuthorizationScreen
+import com.example.feature_register.presentation.ui.RegisterScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,8 +17,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyTrainingTheme {
-                NavigationBarExample()
-                //AuthorizationScreen()
+                //NavigationBarExample()
+                //RegisterScreen()
+                AuthorizationScreen()
             }
         }
     }

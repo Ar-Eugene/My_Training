@@ -22,6 +22,6 @@ val WhiteSmoke= Color(0xFFF5F5F5)
 
 val Black = Color(0xFF000000)
 
-val Blue3= Color(0xFF2a5679)
+val Blue= Color(0xFF2a5679)
 
 val Green= Color(0xFF235347)
