@@ -24,15 +24,15 @@ val Typography = Typography(
         fontSize = 18.sp,
         color = Black
     ),
-    labelSmall = TextStyle(
-        fontFamily = Nunito,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    ),
     bodyLarge = TextStyle(
         fontFamily = Nunito,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         color = Black
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Nunito,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
     )
 )

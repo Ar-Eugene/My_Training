@@ -18,8 +18,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyTrainingTheme {
                 //NavigationBarExample()
-                //RegisterScreen()
-                AuthorizationScreen()
+                RegisterScreen()
+                //AuthorizationScreen()
             }
         }
     }

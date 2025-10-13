@@ -41,6 +41,7 @@ import com.example.core.precentation.theme.White
 import com.example.core.precentation.theme.WhiteSmoke
 import com.example.feature_register.R
 import com.example.feature_register.presentation.components.CustomTextField
+import com.example.feature_register.presentation.components.ErrorText
 import com.example.feature_register.presentation.viewmodel.RegisterViewModel
 
 @Composable
@@ -48,6 +49,12 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
     val userName by viewModel.userName.collectAsState()
     val login by viewModel.login.collectAsState()
     val password by viewModel.password.collectAsState()
+
+    val userNameError by viewModel.userNameError.collectAsState()
+    val loginError by viewModel.loginError.collectAsState()
+    val passwordError by viewModel.passwordError.collectAsState()
+
+    val isRegisterEnabled by viewModel.isRegisterEnabled.collectAsState()
 
     Box(
         modifier = Modifier
@@ -57,8 +64,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
             .navigationBarsPadding()
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             // ВЕРХНЯЯ часть
             Column(
@@ -67,12 +73,12 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                     .padding(horizontal = dimensionResource(R.dimen.padding_16dp))
             ) {
                 Image(
-                    modifier = Modifier
-                        .heightIn(max = 200.dp),
+                    modifier = Modifier.heightIn(max = 200.dp),
                     painter = painterResource(R.drawable.books_register_img),
                     contentDescription = null
                 )
             }
+
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_8dp)))
 
             // НИЖНЯЯ часть
@@ -90,20 +96,15 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                     horizontalAlignment = Alignment.Start
                 ) {
 
+                    // Кнопка назад
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
-
                     ) {
-                        // Кнопка назад в левом углу
-                        IconButton(
-                            onClick = { },
-                            modifier = Modifier,
-                        ) {
+                        IconButton(onClick = { }) {
                             Icon(
                                 painter = painterResource(com.example.core.R.drawable.arrow_back_ic),
-                                contentDescription = "кнопка перехода на экран AuthorizationScreen"
+                                contentDescription = "Назад"
                             )
                         }
                         Text(
@@ -111,14 +112,17 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                             style = MaterialTheme.typography.bodyLarge
                         )
                     }
+
                     Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
 
                     Text(
                         text = stringResource(R.string.signup),
                         style = MaterialTheme.typography.displayLarge
                     )
+
                     Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
 
+                    // Имя
                     CustomTextField(
                         value = userName,
                         onValueChange = { viewModel.stateUserName(it) },
@@ -126,8 +130,13 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                         icon = Icons.Default.AccountBox,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_24dp)))
+                    if (userNameError != null) {
+                        ErrorText(text = userNameError!!)
+                    }
 
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
+
+                    // Логин
                     CustomTextField(
                         value = login,
                         onValueChange = { viewModel.stateLogin(it) },
@@ -135,8 +144,13 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                         icon = Icons.Default.Person,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_24dp)))
+                    if (loginError != null) {
+                        ErrorText(text = loginError!!)
+                    }
 
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
+
+                    // Пароль
                     CustomTextField(
                         value = password,
                         onValueChange = { viewModel.statePassword(it) },
@@ -145,14 +159,19 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                         isPassword = true
                     )
+                    if (passwordError != null) {
+                        ErrorText(passwordError!!)
+                    }
+
                     Spacer(modifier = Modifier.height(48.dp))
 
                     Button(
-                        onClick = { },
+                        onClick = { /* регистрация */ },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Blue)
+                        colors = ButtonDefaults.buttonColors(containerColor = Blue),
+                        enabled = isRegisterEnabled
                     ) {
                         Text(
                             stringResource(R.string.register),
@@ -167,4 +186,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
         }
     }
 }
+
+
+
 

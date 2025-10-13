@@ -58,6 +58,9 @@ dependencies {
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.runtime.livedata)
 
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
     // Navigation for Compose
     implementation(libs.androidx.navigation.compose)
 
