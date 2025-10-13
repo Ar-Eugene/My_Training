@@ -23,10 +23,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,23 +33,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.core.precentation.theme.Blue
 import com.example.core.precentation.theme.White
 import com.example.core.precentation.theme.WhiteSmoke
 import com.example.feature_register.R
 import com.example.feature_register.presentation.components.CustomTextField
+import com.example.feature_register.presentation.viewmodel.AuthorizationViewModel
 
 @Composable
-fun AuthorizationScreen() {
-    var login by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
+fun AuthorizationScreen(viewModel: AuthorizationViewModel = viewModel()) {
+    val login by viewModel.login.collectAsState()
+    val password by viewModel.password.collectAsState()
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Blue)
             .statusBarsPadding()
             .navigationBarsPadding()
+
     ) {
         Column(
             modifier = Modifier
@@ -103,7 +103,7 @@ fun AuthorizationScreen() {
 
                     CustomTextField(
                         value = login,
-                        onValueChange = { login = it },
+                        onValueChange = { viewModel.stateLogin(it) },
                         placeholder = stringResource(R.string.enter_login),
                         icon = Icons.Default.Person,
                         modifier = Modifier.fillMaxWidth()
@@ -112,7 +112,7 @@ fun AuthorizationScreen() {
 
                     CustomTextField(
                         value = password,
-                        onValueChange = { password = it },
+                        onValueChange = { viewModel.statePassword(it) },
                         placeholder = stringResource(R.string.enter_password),
                         icon = Icons.Default.Lock,
                         modifier = Modifier.fillMaxWidth(),
