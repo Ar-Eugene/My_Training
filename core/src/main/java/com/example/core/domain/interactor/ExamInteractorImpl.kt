@@ -13,4 +13,8 @@ class ExamInteractorImpl @Inject constructor(private val examPreferencesReposito
     override fun getExamScreen(): ExamType {
         return examPreferencesRepository.getExamType()
     }
+
+    override fun isExamTypeSelected(): Boolean {
+        return examPreferencesRepository.isExamTypeSelected()
+    }
 }

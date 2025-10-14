@@ -36,6 +36,15 @@ class ExamPreferencesRepositoryImpl @Inject constructor(@ApplicationContext priv
         }
     }
 
+    override fun isExamTypeSelected(): Boolean {
+        return runBlocking {
+            val saved = context.dataStore.data
+                .map { pref -> pref[EXAM_TYPE_KEY] }
+                .firstOrNull()
+            saved == ExamType.OGE.name || saved == ExamType.EGE.name
+        }
+    }
+
     companion object {
         private val EXAM_TYPE_KEY = stringPreferencesKey("exam_type_key")
     }

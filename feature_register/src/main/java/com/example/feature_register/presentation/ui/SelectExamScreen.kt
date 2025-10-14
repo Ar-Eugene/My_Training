@@ -21,7 +21,7 @@ import com.example.feature_register.presentation.viewmodel.SelectExamViewModel
 fun SelectExamScreen(
     onOgeClick: () -> Unit,
     onEgeClick: () -> Unit,
-    viewModel: SelectExamViewModel = hiltViewModel()
+    viewModel: SelectExamViewModel = hiltViewModel(),
 ) {
     Column(
         modifier = Modifier

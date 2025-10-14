@@ -18,26 +18,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.core.precentation.theme.BottomNavigationColor
+import com.example.core.precentation.ui.TaskSelectionTicketScreen
+import com.example.core.precentation.ui.TicketsScreen
+import com.example.core.precentation.ui.YearSelectionScreen
 import com.example.feature_favorites.presentation.ui.FavoriteScreen
 import com.example.feature_oge.presentation.ui.AllQuestionsScreen
 import com.example.feature_oge.presentation.ui.SelectionTrainingSectionScreen
-import com.example.core.precentation.ui.TaskSelectionTicketScreen
 import com.example.feature_oge.presentation.ui.TheoryScreen
 import com.example.feature_oge.presentation.ui.TicketDetailsScreen
-import com.example.core.precentation.ui.TicketsScreen
-import com.example.core.precentation.ui.YearSelectionScreen
 import com.example.feature_profile.presentation.ui.ProfileScreen
 import com.example.feature_profile.presentation.ui.TarifScreen
 import com.example.feature_register.presentation.ui.AuthorizationScreen
 import com.example.feature_register.presentation.ui.RegisterScreen
 import com.example.feature_register.presentation.ui.SelectExamScreen
 import com.example.mytraining.precentation.ui.HomeScreen
+import com.example.mytraining.precentation.viewmodel.AuthGateViewModel
 
 @Composable
 fun AppNavHost(
@@ -50,9 +52,17 @@ fun AppNavHost(
         startDestination = startDestination
     ) {
         composable(Routes.AUTHORIZATION) {
+            val gateViewModel: AuthGateViewModel = hiltViewModel()
             AuthorizationScreen(
                 onLoginClick = {
-                    navController.navigate(Routes.SELECT_EXAM)
+                    if (gateViewModel.isExamTypeSelected()) {
+                        navController.navigate(Destination.HOME.route) {
+                            popUpTo(Routes.AUTHORIZATION) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    } else {
+                        navController.navigate(Routes.SELECT_EXAM)
+                    }
                 },
                 onRegisterClick = {
                     navController.navigate(Routes.REGISTER)
@@ -81,6 +91,23 @@ fun AppNavHost(
                 onEgeClick = {
                     navController.navigate(Destination.HOME.route) {
                         popUpTo(Routes.AUTHORIZATION) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+        // повторный выбор экзамена из Home: очищаем стек до HOME, чтобы не вернуться на старый Home/Select
+        composable(Routes.SELECT_EXAM_FROM_HOME) {
+            SelectExamScreen(
+                onOgeClick = {
+                    navController.navigate(Destination.HOME.route) {
+                        popUpTo(Destination.HOME.route) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onEgeClick = {
+                    navController.navigate(Destination.HOME.route) {
+                        popUpTo(Destination.HOME.route) { inclusive = true }
                         launchSingleTop = true
                     }
                 }
@@ -209,14 +236,9 @@ fun AppNavHost(
 @Composable
 fun NavigationBarExample(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    //val startDestination = Destination.HOME
     // Отслеживаем текущий маршрут
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-
-    // Определяем выбранный индекс на основе текущего маршрута
-//    val selectedDestination = Destination.entries.indexOfFirst { it.route == currentRoute }
-//        .takeIf { it != -1 } ?: startDestination.ordinal
 
     var showBottomBar = Destination.entries.any { it.route == currentRoute }
     Scaffold(
