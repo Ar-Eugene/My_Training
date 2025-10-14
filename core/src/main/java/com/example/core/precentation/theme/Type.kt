@@ -8,33 +8,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.core.R
 
-val AbrilFatface  = FontFamily(Font(R.font.abril_fatface_regular))
-val Montserrat = FontFamily(
-    Font(R.font.montserrat_regular),
-    Font(R.font.montserrat_bold, FontWeight.Bold)
-)
+val Nunito  = FontFamily(Font(R.font.nunito_variable))
 
-// Set of Material typography styles to start with
 val Typography = Typography(
 
     displayLarge = TextStyle(
-        fontFamily = Montserrat,
+        fontFamily = Nunito,
         fontWeight = FontWeight.Bold,
-        fontSize = 36.sp
+        fontSize = 42.sp,
+        color = Black
     ),
     displayMedium = TextStyle(
-        fontFamily = Montserrat,
-        fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = Montserrat,
-        fontWeight = FontWeight.Normal,
-        fontSize = 18.sp
+        fontFamily = Nunito,
+        fontWeight = FontWeight.W900,
+        fontSize = 18.sp,
+        color = Black
     ),
     bodyLarge = TextStyle(
-        fontFamily = Montserrat,
+        fontFamily = Nunito,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 18.sp,
+        color = Black
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Nunito,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
     )
 )

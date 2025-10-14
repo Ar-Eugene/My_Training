@@ -5,4 +5,5 @@ import com.example.core.domain.models.ExamType
 interface ExamInteractor {
     suspend fun saveExamScreen(examType: ExamType)
     fun getExamScreen(): ExamType
+    fun isExamTypeSelected(): Boolean
 }

@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.mytraining.precentation.navigation.NavigationBarExample
 import com.example.core.precentation.theme.MyTrainingTheme
+import com.example.mytraining.precentation.navigation.NavigationBarExample
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/feature-favorites" />
             <option value="$PROJECT_DIR$/feature-oge" />
             <option value="$PROJECT_DIR$/feature-profile" />
+            <option value="$PROJECT_DIR$/feature_register" />
           </set>
         </option>
       </GradleProjectSettings>
