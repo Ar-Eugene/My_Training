@@ -34,26 +34,65 @@ import com.example.core.precentation.ui.TicketsScreen
 import com.example.core.precentation.ui.YearSelectionScreen
 import com.example.feature_profile.presentation.ui.ProfileScreen
 import com.example.feature_profile.presentation.ui.TarifScreen
+import com.example.feature_register.presentation.ui.AuthorizationScreen
+import com.example.feature_register.presentation.ui.RegisterScreen
+import com.example.feature_register.presentation.ui.SelectExamScreen
 import com.example.mytraining.precentation.ui.HomeScreen
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    startDestination: Destination,
+    startDestination: String = Routes.AUTHORIZATION,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
-        navController,
-        startDestination = startDestination.route
+        navController = navController,
+        startDestination = startDestination
     ) {
+        composable(Routes.AUTHORIZATION) {
+            AuthorizationScreen(
+                onLoginClick = {
+                    navController.navigate(Routes.SELECT_EXAM)
+                },
+                onRegisterClick = {
+                    navController.navigate(Routes.REGISTER)
+                }
+            )
+        }
+
+        composable(Routes.REGISTER) {
+            RegisterScreen(
+                onRegisterSuccess = {
+                    navController.popBackStack() // Возврат на AuthorizationScreen
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Routes.SELECT_EXAM) {
+            SelectExamScreen(
+                onOgeClick = {
+                    navController.navigate(Destination.HOME.route) {
+                        // Очищаем back stack до корня
+                        popUpTo(Routes.AUTHORIZATION) { inclusive = true }
+                    }
+                },
+                onEgeClick = {
+                    navController.navigate(Destination.HOME.route) {
+                        popUpTo(Routes.AUTHORIZATION) { inclusive = true }
+                    }
+                }
+            )
+        }
         Destination.entries.forEach { destination ->
             composable(destination.route) {
                 when (destination) {
-                    Destination.Profile -> ProfileScreen() {
+                    Destination.PROFILE -> ProfileScreen() {
                         navController.navigate(it)
                     }
 
-                    Destination.Favorites -> FavoriteScreen()
+                    Destination.FAVORITES -> FavoriteScreen()
                     Destination.HOME -> HomeScreen(
                         onNavigate = { route ->
                             navController.navigate(route)
@@ -169,73 +208,76 @@ fun AppNavHost(
 @Composable
 fun NavigationBarExample(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    val startDestination = Destination.HOME
+    //val startDestination = Destination.HOME
     // Отслеживаем текущий маршрут
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     // Определяем выбранный индекс на основе текущего маршрута
-    val selectedDestination = Destination.entries.indexOfFirst { it.route == currentRoute }
-        .takeIf { it != -1 } ?: startDestination.ordinal
+//    val selectedDestination = Destination.entries.indexOfFirst { it.route == currentRoute }
+//        .takeIf { it != -1 } ?: startDestination.ordinal
 
     var showBottomBar = Destination.entries.any { it.route == currentRoute }
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            // нижняя чясть кода отвечает за анимацию появления и исчезновения нижней панели
-            AnimatedVisibility(
-                visible = showBottomBar,
-                enter = slideInVertically(
-                    animationSpec = tween(500),
-                    initialOffsetY = { fullHeight -> fullHeight },
-                ),
-                exit = slideOutVertically(
-                    animationSpec = tween(500),
-                    targetOffsetY = { fullHeight -> fullHeight },
-                )
-            ) {
-                NavigationBar(
-                    containerColor = BottomNavigationColor,
-                    windowInsets = NavigationBarDefaults.windowInsets
+            if (showBottomBar) {
+                // нижняя чясть кода отвечает за анимацию появления и исчезновения нижней панели
+                AnimatedVisibility(
+                    visible = showBottomBar,
+                    enter = slideInVertically(
+                        animationSpec = tween(500),
+                        initialOffsetY = { fullHeight -> fullHeight },
+                    ),
+                    exit = slideOutVertically(
+                        animationSpec = tween(500),
+                        targetOffsetY = { fullHeight -> fullHeight },
+                    )
                 ) {
-                    Destination.entries.forEachIndexed { index, destination ->
-                        NavigationBarItem(
-                            selected = selectedDestination == index,
-                            onClick = {
-                                navController.navigate(route = destination.route) {
-                                    popUpTo(startDestination.route) {
-                                        saveState = true
+                    NavigationBar(
+                        containerColor = BottomNavigationColor,
+                        windowInsets = NavigationBarDefaults.windowInsets
+                    ) {
+                        Destination.entries.forEachIndexed { index, destination ->
+                            val selected = currentRoute == destination.route
+                            NavigationBarItem(
+                                selected = selected,
+                                onClick = {
+                                    navController.navigate(route = destination.route) {
+                                        popUpTo(Destination.HOME.route) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            icon = {
-                                Icon(
-                                    painter = painterResource(id = destination.icon),
-                                    contentDescription = destination.contentDescription,
-                                    tint = if (selectedDestination == index) Color(0xFF324379) else Color(
-                                        0xFF2C2C2C
+                                },
+                                icon = {
+                                    Icon(
+                                        painter = painterResource(id = destination.icon),
+                                        contentDescription = destination.contentDescription,
+                                        tint = if (selected) Color(0xFF324379) else Color(
+                                            0xFF2C2C2C
+                                        )
                                     )
+                                },
+                                label = {
+                                    Text(
+                                        text = stringResource(id = destination.label),
+                                        color = if (selected) Color(0xFF324379) else Color(
+                                            0xFF2C2C2C
+                                        ) // или другой контрастный цвет,
+                                    )
+                                },
+                                colors = NavigationBarItemDefaults.colors(
+                                    indicatorColor = Color(0xFFE0E5F2) // фон выделенного таба
                                 )
-                            },
-                            label = {
-                                Text(
-                                    text = stringResource(id = destination.label),
-                                    color = if (selectedDestination == index) Color(0xFF324379) else Color(
-                                        0xFF2C2C2C
-                                    ) // или другой контрастный цвет,
-                                )
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = Color(0xFFE0E5F2) // фон выделенного таба
                             )
-                        )
+                        }
                     }
                 }
             }
         }
     ) { contentPadding ->
-        AppNavHost(navController, startDestination, modifier = Modifier.padding(contentPadding))
+        AppNavHost(navController, modifier = Modifier.padding(contentPadding))
     }
 }

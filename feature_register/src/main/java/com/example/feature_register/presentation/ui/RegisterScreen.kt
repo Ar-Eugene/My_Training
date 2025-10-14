@@ -45,7 +45,11 @@ import com.example.feature_register.presentation.components.ErrorText
 import com.example.feature_register.presentation.viewmodel.RegisterViewModel
 
 @Composable
-fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
+fun RegisterScreen(
+    viewModel: RegisterViewModel = viewModel(),
+    onRegisterSuccess: () -> Unit,
+    onBackClick: () -> Unit,
+) {
     val userName by viewModel.userName.collectAsState()
     val login by viewModel.login.collectAsState()
     val password by viewModel.password.collectAsState()
@@ -101,7 +105,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        IconButton(onClick = { }) {
+                        IconButton(onClick = { onBackClick()}) {
                             Icon(
                                 painter = painterResource(com.example.core.R.drawable.arrow_back_ic),
                                 contentDescription = "Назад"
@@ -166,7 +170,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) {
                     Spacer(modifier = Modifier.height(48.dp))
 
                     Button(
-                        onClick = { /* регистрация */ },
+                        onClick = { onRegisterSuccess() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),

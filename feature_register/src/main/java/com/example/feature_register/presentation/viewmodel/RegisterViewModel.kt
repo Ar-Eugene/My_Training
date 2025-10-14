@@ -59,7 +59,7 @@ class RegisterViewModel @Inject constructor() : ViewModel() {
         validatePassword(password)
     }
 
-    // ---- Валидация ----
+    // Валидация
     private fun validateUserName(name: String) {
         _userNameError.value = when {
             name.isBlank() -> "Введите имя"

@@ -17,8 +17,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyTrainingTheme {
-                //NavigationBarExample()
-                RegisterScreen()
+                NavigationBarExample()
+                // RegisterScreen()
                 //AuthorizationScreen()
             }
         }

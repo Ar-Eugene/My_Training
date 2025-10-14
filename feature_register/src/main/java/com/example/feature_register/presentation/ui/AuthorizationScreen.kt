@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.core.precentation.theme.Blue
 import com.example.core.precentation.theme.White
 import com.example.core.precentation.theme.WhiteSmoke
@@ -42,7 +43,11 @@ import com.example.feature_register.presentation.components.CustomTextField
 import com.example.feature_register.presentation.viewmodel.AuthorizationViewModel
 
 @Composable
-fun AuthorizationScreen(viewModel: AuthorizationViewModel = viewModel()) {
+fun AuthorizationScreen(
+    viewModel: AuthorizationViewModel = viewModel(),
+    onLoginClick: () -> Unit,
+    onRegisterClick: () -> Unit,
+) {
     val login by viewModel.login.collectAsState()
     val password by viewModel.password.collectAsState()
     Box(
@@ -121,7 +126,7 @@ fun AuthorizationScreen(viewModel: AuthorizationViewModel = viewModel()) {
                     Spacer(modifier = Modifier.height(48.dp))
 
                     Button(
-                        onClick = { },
+                        onClick = { onLoginClick()},
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -149,7 +154,7 @@ fun AuthorizationScreen(viewModel: AuthorizationViewModel = viewModel()) {
                             text = stringResource(R.string.register),
                             modifier = Modifier
                                 .clickable {
-                                    // Обработка нажатия
+                                    onRegisterClick()
                                 }
                                 .padding(start = 6.dp),
                             style = MaterialTheme.typography.bodyLarge.copy(
