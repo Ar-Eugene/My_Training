@@ -13,11 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.domain.models.ExamType
+import com.example.feature_register.presentation.viewmodel.SelectExamViewModel
 
 @Composable
 fun SelectExamScreen(
     onOgeClick: () -> Unit,
-    onEgeClick: () -> Unit
+    onEgeClick: () -> Unit,
+    viewModel: SelectExamViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier
@@ -27,7 +31,10 @@ fun SelectExamScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = onOgeClick,
+            onClick = {
+                viewModel.saveExamType(ExamType.OGE)
+                onOgeClick()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("ОГЭ")
@@ -36,7 +43,10 @@ fun SelectExamScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = onEgeClick,
+            onClick = {
+                viewModel.saveExamType(ExamType.EGE)
+                onEgeClick()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("ЕГЭ")

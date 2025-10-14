@@ -74,13 +74,14 @@ fun AppNavHost(
             SelectExamScreen(
                 onOgeClick = {
                     navController.navigate(Destination.HOME.route) {
-                        // Очищаем back stack до корня
                         popUpTo(Routes.AUTHORIZATION) { inclusive = true }
+                        launchSingleTop = true
                     }
                 },
                 onEgeClick = {
                     navController.navigate(Destination.HOME.route) {
                         popUpTo(Routes.AUTHORIZATION) { inclusive = true }
+                        launchSingleTop = true
                     }
                 }
             )

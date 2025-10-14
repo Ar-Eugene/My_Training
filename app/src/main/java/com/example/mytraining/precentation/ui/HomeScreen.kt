@@ -58,35 +58,6 @@ fun HomeScreen(
             .background(brush = Brush.linearGradient(colors = backgroundGradientColor))
             .statusBarsPadding()
     ) {
-        // Кнопки выбора типа экзамена
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(com.example.core.R.dimen.padding_16dp)),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            SelectExamButton(
-                modifier = Modifier
-                    .weight(1f),
-                text = "ОГЭ",
-                selected = examTypeState.value == ExamType.OGE,
-                onClick = {
-                    homeViewModel.savaExamScreen(ExamType.OGE)
-                    examTypeState.value = ExamType.OGE
-                }
-            )
-            Spacer(modifier = Modifier.width(dimensionResource(com.example.core.R.dimen.padding_8dp)))
-            SelectExamButton(
-                modifier = Modifier
-                    .weight(1f),
-                text = "ЕГЭ",
-                selected = examTypeState.value == ExamType.EGE,
-                onClick = {
-                    homeViewModel.savaExamScreen(ExamType.EGE)
-                    examTypeState.value = ExamType.EGE
-                }
-            )
-        }
         when (examTypeState.value) {
             ExamType.OGE -> OgeScreen(
                 onSubjectClick = { subjectId ->
