@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.example.core.precentation.theme.Blue
 import com.example.core.precentation.theme.White
 import com.example.core.precentation.theme.WhiteSmoke
@@ -66,7 +65,7 @@ fun AuthorizationScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(R.dimen.padding_16dp))
+                    .padding(horizontal = dimensionResource(com.example.core.R.dimen.padding_16dp))
             ) {
                 Image(
                     modifier = Modifier.fillMaxWidth(),
@@ -83,7 +82,7 @@ fun AuthorizationScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_8dp)))
+            Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_8dp)))
 
             // НИЖНЯЯ часть
             Box(
@@ -96,7 +95,7 @@ fun AuthorizationScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_24dp)),
+                        .padding(dimensionResource(com.example.core.R.dimen.padding_24dp)),
                     horizontalAlignment = Alignment.Start
                 ) {
 
@@ -104,7 +103,7 @@ fun AuthorizationScreen(
                         text = stringResource(R.string.enter),
                         style = MaterialTheme.typography.displayLarge
                     )
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
+                    Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
                     CustomTextField(
                         value = login,
@@ -113,7 +112,7 @@ fun AuthorizationScreen(
                         icon = Icons.Default.Person,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_24dp)))
+                    Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_24dp)))
 
                     CustomTextField(
                         value = password,
