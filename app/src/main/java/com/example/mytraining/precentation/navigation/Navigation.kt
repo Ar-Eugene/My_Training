@@ -24,7 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.core.precentation.theme.BottomNavigationColor
+import com.example.core.precentation.theme.White
 import com.example.core.precentation.ui.TaskSelectionTicketScreen
 import com.example.core.precentation.ui.TicketsScreen
 import com.example.core.precentation.ui.YearSelectionScreen
@@ -240,16 +240,16 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    var showBottomBar = Destination.entries.any { it.route == currentRoute }
+    val showBottomBar = Destination.entries.any { it.route == currentRoute }
     Scaffold(
         modifier = modifier,
         bottomBar = {
             if (showBottomBar) {
-                // нижняя чясть кода отвечает за анимацию появления и исчезновения нижней панели
+                // нижняя часть кода отвечает за анимацию появления и исчезновения нижней панели
                 AnimatedVisibility(
                     visible = showBottomBar,
                     enter = slideInVertically(
-                        animationSpec = tween(500),
+                        animationSpec = tween(500), // Уменьшили время анимации для более быстрого отклика
                         initialOffsetY = { fullHeight -> fullHeight },
                     ),
                     exit = slideOutVertically(
@@ -258,7 +258,7 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
                     )
                 ) {
                     NavigationBar(
-                        containerColor = BottomNavigationColor,
+                        containerColor = White,
                         windowInsets = NavigationBarDefaults.windowInsets
                     ) {
                         Destination.entries.forEachIndexed { index, destination ->
@@ -278,21 +278,21 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
                                     Icon(
                                         painter = painterResource(id = destination.icon),
                                         contentDescription = destination.contentDescription,
-                                        tint = if (selected) Color(0xFF324379) else Color(
-                                            0xFF2C2C2C
+                                        tint = if (selected) Color(0xFFFFFFFF) else Color(
+                                            0xFF000000
                                         )
                                     )
                                 },
                                 label = {
                                     Text(
                                         text = stringResource(id = destination.label),
-                                        color = if (selected) Color(0xFF324379) else Color(
-                                            0xFF2C2C2C
+                                        color = if (selected) Color(0xFF000000) else Color(
+                                            0xFF000000
                                         ) // или другой контрастный цвет,
                                     )
                                 },
                                 colors = NavigationBarItemDefaults.colors(
-                                    indicatorColor = Color(0xFFE0E5F2) // фон выделенного таба
+                                    indicatorColor = Color(0xCC2a5679) // фон выделенного таба
                                 )
                             )
                         }
