@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="choose_subgect_txt">Выберите предмет</string>
     <string name="theoretical_material_txt">Теория</string>
     <string name="select_some_answer">Выберите несколько вариантов ответа:</string>
     <string name="you_text_answer">Введите ваш ответ в текстовое поле</string>

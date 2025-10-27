@@ -292,7 +292,7 @@ fun NavigationBarExample(modifier: Modifier = Modifier) {
                                     )
                                 },
                                 colors = NavigationBarItemDefaults.colors(
-                                    indicatorColor = Color(0xCC2a5679) // фон выделенного таба
+                                    indicatorColor = Color(0xFF3b6789) // фон выделенного таба
                                 )
                             )
                         }
