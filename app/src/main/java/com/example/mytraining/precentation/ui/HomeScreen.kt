@@ -123,7 +123,7 @@ fun HomeScreen(
                             .align(Alignment.CenterStart)
                             .padding(start = dimensionResource(com.example.core.R.dimen.padding_16dp))
                             .background(
-                                color = Blue,
+                                color = LightBlue,
                                 shape = CircleShape
                             )
                             .size(dimensionResource(com.example.core.R.dimen.padding_48dp))
@@ -145,9 +145,9 @@ fun HomeScreen(
                     ) {
                         // Тип экзамена
                         Text(
-                            text = "Экзамен: ",
+                            text = "Экзамен: ${homeViewModel.getExamTypeDisplayName()}",
                             textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.labelSmall
+                            style = MaterialTheme.typography.labelSmall,
                         )
                         // Прогресс обучения
                         Text(
