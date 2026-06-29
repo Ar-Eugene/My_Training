@@ -18,4 +18,10 @@ class HomeViewModel @Inject constructor(
     fun navigateToYearSelection(subjectId: String, onNavigate: (String) -> Unit) {
         onNavigate("year-selection/$subjectId")
     }
+    fun getExamTypeDisplayName(): String {
+        return when (getExamScreen()) {
+            ExamType.OGE -> "ОГЭ"
+            ExamType.EGE -> "ЕГЭ"
+        }
+    }
 }

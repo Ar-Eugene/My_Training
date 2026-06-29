@@ -31,11 +31,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.domain.models.ExamType
 import com.example.core.domain.models.Subject
@@ -49,7 +47,7 @@ import com.example.feature_oge.presentation.viewmodel.OgeViewModel
 fun OgeScreen(
     modifier: Modifier = Modifier,
     onSubjectClick: (String) -> Unit = {},
-    viewModel: OgeViewModel = hiltViewModel()
+    viewModel: OgeViewModel = hiltViewModel(),
 ) {
     // Фильтруем только предметы ОГЭ
     val ogeSubjects = mockSubjects.filter { it.examType == ExamType.OGE }
@@ -60,33 +58,14 @@ fun OgeScreen(
             .statusBarsPadding()
             .padding(horizontal = 16.dp)
     ) {
-        // Заголовок
-        TitleChooseSubject()
-
         // список предметов
         ListSubject(
-            ogeSubjects = ogeSubjects, 
+            ogeSubjects = ogeSubjects,
             onSubjectClick = onSubjectClick,
             viewModel = viewModel
         )
 
     }
-}
-
-/**
- * Текст о выборе предмета
- */
-@Composable
-fun TitleChooseSubject() {
-
-    Text(
-        modifier = Modifier.padding(vertical = 16.dp),
-        text = stringResource(R.string.choose_subgect_txt),
-        style = MaterialTheme.typography.displayLarge,
-        fontSize = 30.sp,
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis
-    )
 }
 
 /**
@@ -98,7 +77,7 @@ fun SelectSubject(
     text: String,
     subjectId: String,
     onClick: () -> Unit,
-    viewModel: OgeViewModel
+    viewModel: OgeViewModel,
 ) {
     val favoriteSubjects by viewModel.favoriteSubjects.collectAsState()
     val isFavorite = favoriteSubjects.contains(subjectId)
@@ -157,7 +136,7 @@ fun SelectSubject(
 fun ListSubject(
     ogeSubjects: List<Subject>,
     onSubjectClick: (String) -> Unit,
-    viewModel: OgeViewModel
+    viewModel: OgeViewModel,
 ) {
     // Список предметов
     LazyVerticalGrid(

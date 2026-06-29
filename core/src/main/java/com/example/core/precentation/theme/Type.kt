@@ -33,6 +33,7 @@ val Typography = Typography(
     labelSmall = TextStyle(
         fontFamily = Nunito,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
+        color = Black
     )
 )

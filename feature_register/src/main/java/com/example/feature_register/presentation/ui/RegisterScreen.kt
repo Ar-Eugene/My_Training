@@ -74,7 +74,7 @@ fun RegisterScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(R.dimen.padding_16dp))
+                    .padding(horizontal = dimensionResource(com.example.core.R.dimen.padding_16dp))
             ) {
                 Image(
                     modifier = Modifier.heightIn(max = 200.dp),
@@ -83,7 +83,7 @@ fun RegisterScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_8dp)))
+            Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_8dp)))
 
             // НИЖНЯЯ часть
             Box(
@@ -96,7 +96,7 @@ fun RegisterScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_24dp)),
+                        .padding(dimensionResource(com.example.core.R.dimen.padding_24dp)),
                     horizontalAlignment = Alignment.Start
                 ) {
 
@@ -117,14 +117,14 @@ fun RegisterScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
+                    Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
                     Text(
                         text = stringResource(R.string.signup),
                         style = MaterialTheme.typography.displayLarge
                     )
 
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
+                    Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
                     // Имя
                     CustomTextField(
@@ -138,7 +138,7 @@ fun RegisterScreen(
                         ErrorText(text = userNameError!!)
                     }
 
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
+                    Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
                     // Логин
                     CustomTextField(
@@ -152,7 +152,7 @@ fun RegisterScreen(
                         ErrorText(text = loginError!!)
                     }
 
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16dp)))
+                    Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
                     // Пароль
                     CustomTextField(

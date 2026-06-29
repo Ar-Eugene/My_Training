@@ -3,4 +3,8 @@
     <string name="home_label">Главная</string>
     <string name="favorite_label">Избранные</string>
     <string name="profile_label">Профиль</string>
+    <string name="choose_subject_txt">Выберите предмет</string>
+    <string name="hello_user">C возвращением,</string>
+    <string name="your_progress">Ваш прогресс обучения</string>
+
 </resources>
