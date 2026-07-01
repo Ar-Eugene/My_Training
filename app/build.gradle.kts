@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.gmsFireBase)
+
 }
 
 android {
@@ -100,7 +100,4 @@ dependencies {
     //Datastore
     implementation(libs.androidx.datastore.preferences)
 
-    //Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.firestore)
 }
