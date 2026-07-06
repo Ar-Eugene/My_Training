@@ -3,6 +3,7 @@ package com.example.feature_oge.presentation.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -14,9 +15,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
@@ -33,15 +37,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.R
 import com.example.core.domain.models.AnswerState
 import com.example.core.domain.models.AnswerType
-import com.example.core.mock.mockSubjects
+import com.example.core.domain.models.Question
+import com.example.core.precentation.components.AlertDialogExample
 import com.example.core.precentation.components.TaskCardTicketScreen
+import com.example.core.precentation.components.TopIconButtonAndText
 import com.example.core.precentation.theme.BackgroundGradientBlue
 import com.example.core.precentation.theme.BackgroundGradientGreen
-import com.example.core.precentation.components.AlertDialogExample
-import com.example.core.precentation.components.TopIconButtonAndText
+import com.example.feature_oge.presentation.viewmodel.TicketDetailsViewModel
+import com.example.feature_oge.presentation.viewmodel.TicketQuestionsUiState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -50,27 +57,73 @@ fun TicketDetailsScreen(
     year: Int,
     ticketNumber: Int,
     onBackClick: () -> Unit = {},
+    viewModel: TicketDetailsViewModel = hiltViewModel(),
 ) {
     val backgroundGradientColor = listOf(
         BackgroundGradientGreen, BackgroundGradientBlue
     )
 
-    // диалоговое окно при выходе
+    LaunchedEffect(subjectId, year, ticketNumber) {
+        viewModel.loadQuestions(subjectId, year, ticketNumber)
+    }
+
+    val uiState by viewModel.uiState.collectAsState()
+
+    when (val state = uiState) {
+        TicketQuestionsUiState.Loading -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(brush = Brush.linearGradient(backgroundGradientColor)),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(color = Color.White)
+            }
+        }
+
+        is TicketQuestionsUiState.Error -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(brush = Brush.linearGradient(backgroundGradientColor))
+                    .statusBarsPadding()
+                    .padding(16.dp),
+            ) {
+                TopIconButtonAndText(onClick = onBackClick, title = "Билет № $ticketNumber")
+                Text(
+                    text = state.message,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White,
+                    modifier = Modifier.padding(vertical = 32.dp),
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+
+        is TicketQuestionsUiState.Success -> {
+            TicketDetailsContent(
+                ticketNumber = ticketNumber,
+                allQuestions = state.questions,
+                onBackClick = onBackClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun TicketDetailsContent(
+    ticketNumber: Int,
+    allQuestions: List<Pair<Int, Question>>,
+    onBackClick: () -> Unit,
+) {
+    val backgroundGradientColor = listOf(
+        BackgroundGradientGreen, BackgroundGradientBlue
+    )
+
     var showDialog by remember { mutableStateOf(false) }
 
-    val subject = mockSubjects.find { it.id == subjectId }
-    val yearData = subject?.years?.find { it.year == year }
-    val ticket = yearData?.tickets?.find { it.number == ticketNumber }
-
-    // Собираем все вопросы
-    val allQuestions = ticket?.tasks?.flatMap { task ->
-        task.questions.map { question -> task.number to question }
-    } ?: emptyList()
-
-    // Состояние для ответов
     val answers = remember { mutableStateMapOf<String, AnswerState>() }
 
-    // Проверяем, все ли вопросы отвечены
     val allQuestionsAnswered by remember {
         derivedStateOf {
             allQuestions.all { (taskNumber, question) ->
@@ -87,8 +140,6 @@ fun TicketDetailsScreen(
         }
     }
 
-
-    // считаем количество правильных ответов
     val correctAnswersCount by remember {
         derivedStateOf {
             allQuestions.count { (taskNumber, question) ->
@@ -114,18 +165,14 @@ fun TicketDetailsScreen(
         }
     }
 
-
-    // Перехватываем системную кнопку "Назад"
     BackHandler {
-        // Показываем диалог только если не все вопросы отвечены
         if (!allQuestionsAnswered) {
             showDialog = true
         } else {
-            onBackClick() // Если все отвечено, просто выходим
+            onBackClick()
         }
     }
 
-    // Диалог подтверждения
     if (showDialog) {
         AlertDialogExample(
             onDismissRequest = { showDialog = false },
@@ -147,21 +194,17 @@ fun TicketDetailsScreen(
             .navigationBarsPadding()
             .padding(horizontal = dimensionResource(R.dimen.padding_16dp))
     ) {
-
-        // Заголовок с кнопкой "Назад"
         TopIconButtonAndText(
             onClick = {
-                // Показываем диалог только если не все вопросы отвечены
                 if (!allQuestionsAnswered) {
                     showDialog = true
                 } else {
-                    onBackClick()// Если все отвечено, просто выходим
+                    onBackClick()
                 }
-            }, // вместо прямого выхода
+            },
             title = "Билет № $ticketNumber"
         )
 
-        // Горизонтальная прокрутка
         val pagerState = rememberPagerState(pageCount = { allQuestions.size + 1 })
         val scope = rememberCoroutineScope()
 
@@ -170,7 +213,6 @@ fun TicketDetailsScreen(
             modifier = Modifier.fillMaxSize()
         ) { page ->
             if (page < allQuestions.size) {
-                // обычные вопросы
                 val (taskNumber, question) = allQuestions[page]
                 val key = "${taskNumber}-${question.id}"
 
@@ -191,7 +233,6 @@ fun TicketDetailsScreen(
                     }
                 )
             } else {
-                // последняя страница – результат
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -213,9 +254,9 @@ fun TicketDetailsScreen(
 
                         Button(
                             onClick = {
-                                answers.clear() // сброс ответов
+                                answers.clear()
                                 scope.launch {
-                                    pagerState.scrollToPage(0) // мгновенно кидаем на первую страницу
+                                    pagerState.scrollToPage(0)
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(
@@ -239,10 +280,3 @@ fun TicketDetailsScreen(
         }
     }
 }
-
-
-
-
-
-
-

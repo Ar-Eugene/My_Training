@@ -2,6 +2,7 @@ package com.example.core.mock
 
 import com.example.core.domain.models.ExamType
 import com.example.core.domain.models.Subject
+import com.example.core.domain.models.Ticket
 import com.example.core.domain.models.YearData
 
 /**
@@ -68,6 +69,16 @@ val mockSubjects = listOf(
         name = "Русский язык ОГЭ",
         examType = ExamType.OGE,
         years = listOf(
+            YearData(
+                year = 2026,
+                tickets = listOf(
+                    Ticket(
+                        id = "oge_rus_2026_t1",
+                        number = 1,
+                        tasks = emptyList(),
+                    )
+                ),
+            ),
             YearData(
                 year = 2025,
                 tickets = mockOgeTicketsRus2025,
