@@ -13,5 +13,10 @@
     <string name="back">Назад</string>
     <string name="select_exam">Выбирай экзамен </string>
 
+    <string name="exit_dialog_title">Внимание</string>
+    <string name="exit_dialog_message">Данные не будут сохранены. Хотите продолжить?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
 
 </resources>

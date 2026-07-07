@@ -23,6 +23,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -51,6 +53,7 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     onNavigate: (String) -> Unit = {},
 ) {
+    val userName by homeViewModel.userName.collectAsState()
     val examTypeState = remember { mutableStateOf<ExamType?>(null) }
     examTypeState.value = homeViewModel.getExamScreen()
 
@@ -78,7 +81,7 @@ fun HomeScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Пользователь",
+                    text = if (userName.isBlank()) "Пользователь" else userName,
                     style = MaterialTheme.typography.displayLarge.copy(
                         color = White,
                         fontSize = 27.sp

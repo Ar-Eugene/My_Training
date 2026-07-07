@@ -18,35 +18,44 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.precentation.theme.Blue
 import com.example.core.precentation.theme.White
 import com.example.core.precentation.theme.WhiteSmoke
 import com.example.feature_register.R
 import com.example.feature_register.presentation.components.CustomTextField
 import com.example.feature_register.presentation.components.ErrorText
+import com.example.feature_register.presentation.viewmodel.RegisterUiEvent
 import com.example.feature_register.presentation.viewmodel.RegisterViewModel
 
 @Composable
 fun RegisterScreen(
-    viewModel: RegisterViewModel = viewModel(),
+    viewModel: RegisterViewModel = hiltViewModel(),
     onRegisterSuccess: () -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -57,8 +66,43 @@ fun RegisterScreen(
     val userNameError by viewModel.userNameError.collectAsState()
     val loginError by viewModel.loginError.collectAsState()
     val passwordError by viewModel.passwordError.collectAsState()
+    val authError by viewModel.authError.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     val isRegisterEnabled by viewModel.isRegisterEnabled.collectAsState()
+
+    var showExitDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                RegisterUiEvent.NavigateToAuthorization -> onRegisterSuccess()
+            }
+        }
+    }
+
+    if (showExitDialog) {
+        AlertDialog(
+            onDismissRequest = { showExitDialog = false },
+            title = { Text(stringResource(R.string.exit_dialog_title)) },
+            text = { Text(stringResource(R.string.exit_dialog_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showExitDialog = false
+                        onBackClick()
+                    }
+                ) {
+                    Text(stringResource(R.string.yes))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExitDialog = false }) {
+                    Text(stringResource(R.string.no))
+                }
+            }
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -70,7 +114,6 @@ fun RegisterScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // ВЕРХНЯЯ часть
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -85,7 +128,6 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_8dp)))
 
-            // НИЖНЯЯ часть
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -99,13 +141,19 @@ fun RegisterScreen(
                         .padding(dimensionResource(com.example.core.R.dimen.padding_24dp)),
                     horizontalAlignment = Alignment.Start
                 ) {
-
-                    // Кнопка назад
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        IconButton(onClick = { onBackClick()}) {
+                        IconButton(
+                            onClick = {
+                                if (viewModel.hasUnsavedData()) {
+                                    showExitDialog = true
+                                } else {
+                                    onBackClick()
+                                }
+                            }
+                        ) {
                             Icon(
                                 painter = painterResource(com.example.core.R.drawable.arrow_back_ic),
                                 contentDescription = "Назад"
@@ -126,7 +174,6 @@ fun RegisterScreen(
 
                     Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
-                    // Имя
                     CustomTextField(
                         value = userName,
                         onValueChange = { viewModel.stateUserName(it) },
@@ -140,7 +187,6 @@ fun RegisterScreen(
 
                     Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
-                    // Логин
                     CustomTextField(
                         value = login,
                         onValueChange = { viewModel.stateLogin(it) },
@@ -154,7 +200,6 @@ fun RegisterScreen(
 
                     Spacer(modifier = Modifier.height(dimensionResource(com.example.core.R.dimen.padding_16dp)))
 
-                    // Пароль
                     CustomTextField(
                         value = password,
                         onValueChange = { viewModel.statePassword(it) },
@@ -166,31 +211,42 @@ fun RegisterScreen(
                     if (passwordError != null) {
                         ErrorText(passwordError!!)
                     }
+                    if (authError != null) {
+                        ErrorText(authError!!)
+                    }
 
                     Spacer(modifier = Modifier.height(48.dp))
 
                     Button(
-                        onClick = { onRegisterSuccess() },
+                        onClick = { viewModel.register() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Blue),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Blue,
+                            disabledContainerColor = Color(0xFFBDBDBD),
+                            contentColor = White,
+                            disabledContentColor = White,
+                        ),
                         enabled = isRegisterEnabled
                     ) {
-                        Text(
-                            stringResource(R.string.register),
-                            style = MaterialTheme.typography.displayMedium.copy(
+                        if (isLoading) {
+                            CircularProgressIndicator(
                                 color = White,
-                                fontSize = 21.sp
+                                modifier = Modifier.height(24.dp)
                             )
-                        )
+                        } else {
+                            Text(
+                                stringResource(R.string.register),
+                                style = MaterialTheme.typography.displayMedium.copy(
+                                    color = White,
+                                    fontSize = 21.sp
+                                )
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
-
-
-
-

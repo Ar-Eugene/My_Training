@@ -1,5 +1,7 @@
 package com.example.core.di
 
+import com.example.core.domain.interactor.AuthInteractor
+import com.example.core.domain.interactor.AuthInteractorImpl
 import com.example.core.domain.interactor.ExamInteractor
 import com.example.core.domain.interactor.ExamInteractorImpl
 import dagger.Binds
@@ -12,4 +14,7 @@ import dagger.hilt.android.components.ViewModelComponent
 abstract class DomainModule {
     @Binds
     abstract fun examInteractorBinds(examInteractorImpl: ExamInteractorImpl): ExamInteractor
+
+    @Binds
+    abstract fun authInteractorBinds(authInteractorImpl: AuthInteractorImpl): AuthInteractor
 }

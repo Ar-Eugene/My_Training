@@ -54,7 +54,7 @@ fun AppNavHost(
         composable(Routes.AUTHORIZATION) {
             val gateViewModel: AuthGateViewModel = hiltViewModel()
             AuthorizationScreen(
-                onLoginClick = {
+                onLoginSuccess = {
                     if (gateViewModel.isExamTypeSelected()) {
                         navController.navigate(Destination.HOME.route) {
                             popUpTo(Routes.AUTHORIZATION) { inclusive = true }
@@ -116,9 +116,9 @@ fun AppNavHost(
         Destination.entries.forEach { destination ->
             composable(destination.route) {
                 when (destination) {
-                    Destination.PROFILE -> ProfileScreen() {
+                    Destination.PROFILE -> ProfileScreen( onNavigate = {
                         navController.navigate(it)
-                    }
+                    })
 
                     Destination.FAVORITES -> FavoriteScreen()
                     Destination.HOME -> HomeScreen(
