@@ -18,6 +18,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -29,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -38,13 +41,18 @@ import com.example.core.precentation.theme.BackgroundGradientGreen
 import com.example.core.precentation.theme.CardBackgroundGradientBrown
 import com.example.core.precentation.theme.CardBackgroundGradientGreen
 import com.example.feature_profile.R
+import com.example.feature_profile.presentation.viewmodel.ProfileViewModel
 
 /**
  * Корневой метод экрана
  */
 @Composable
-fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
+fun ProfileScreen(
+    onNavigate: (String) -> Unit = {},
+    viewModel: ProfileViewModel = hiltViewModel(),
+) {
     val context = LocalContext.current
+    val userName by viewModel.userName.collectAsState()
     val backgroundGradientColor = listOf(
         BackgroundGradientGreen, BackgroundGradientBlue
     )
@@ -74,7 +82,7 @@ fun ProfileScreen(onNavigate: (String) -> Unit = {}) {
             modifier = Modifier
                 .padding(bottom = dimensionResource(com.example.core.R.dimen.padding_24dp)),
             textAlign = TextAlign.Center,
-            text = "Пользователь",
+            text = userName.ifBlank { "Пользователь" },
             style = MaterialTheme.typography.displayLarge,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
